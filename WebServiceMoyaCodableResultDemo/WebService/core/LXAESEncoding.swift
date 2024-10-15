@@ -18,7 +18,7 @@ func paramsEncrypt(params: [String: Any]) -> Data? {
         
         return encryptData.base64EncodedData()
     } catch  {
-        debugPrint("encrypt failed")
+        printl(message: "encrypt failed")
         return nil
     }
 }
@@ -32,12 +32,12 @@ struct AES {
     
      init?(key: String = kAESKey, iv: String = kAESIV) {
         guard key.count == kCCKeySizeAES128 || key.count == kCCKeySizeAES256, let keyData = key.data(using: .utf8) else {
-            debugPrint("Error: failed to set a key")
+            printl(message: "Error: failed to set a key")
             return nil
         }
         
         guard iv.count == kCCBlockSizeAES128, let ivData = iv.data(using: .utf8) else {
-            debugPrint("Error: failed to set an initial vector.")
+            printl(message: "Error: failed to set an initial vector.")
             return nil
         }
         
@@ -88,7 +88,7 @@ struct AES {
         
         
         guard UInt32(status) == UInt32(kCCSuccess) else {
-            debugPrint("Error: Failed to crypt data. Status \(status)")
+            printl(message: "Error: Failed to crypt data. Status \(status)")
             return nil
         }
         

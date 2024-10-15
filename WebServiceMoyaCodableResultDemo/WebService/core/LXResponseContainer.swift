@@ -61,19 +61,19 @@ func parseResponseToResult<T: Codable>(responseObject: Any?, error: Error?) -> R
                                                 message: message,
                                                 value: model))
         } catch DecodingError.keyNotFound(let key, let context) {
-            print("keyNotFound: \(key) is not found in JSON: \(context.debugDescription)")
+            printl(message: "keyNotFound: \(key) is not found in JSON: \(context.debugDescription)")
             return .failure(LXError.dataContentTransformToModelFailed)
         } catch DecodingError.valueNotFound(let type, let context) {
-            print("valueNotFound: \(type) is not found in JSON: \(context.debugDescription)")
+            printl(message: "valueNotFound: \(type) is not found in JSON: \(context.debugDescription)")
             return .failure(LXError.dataContentTransformToModelFailed)
         } catch DecodingError.typeMismatch(let type, let context) {
-            print("typeMismatch: \(type) is mismatch in JSON: \(context.debugDescription) \(context.codingPath)")
+            printl(message: "typeMismatch: \(type) is mismatch in JSON: \(context.debugDescription) \(context.codingPath)")
             return .failure(LXError.dataContentTransformToModelFailed)
         } catch DecodingError.dataCorrupted(let context) {
-            print("dataCorrupted: \(context.debugDescription)")
+            printl(message: "dataCorrupted: \(context.debugDescription)")
             return .failure(LXError.dataContentTransformToModelFailed)
         } catch let error {
-            print("error: \(error.localizedDescription)")
+            printl(message: "error: \(error.localizedDescription)")
             return .failure(LXError.exception(message: error.localizedDescription))
         }
     } else {
