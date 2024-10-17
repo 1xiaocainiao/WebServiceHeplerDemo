@@ -6,6 +6,7 @@ target 'WebServiceMoyaCodableResultDemo' do
   use_frameworks!
 
   pod 'Moya', '~> 15.0'
+  pod 'Moya/Combine', '~> 15.0'
 
   # Pods for WebServiceMoyaCodableResultDemo
 

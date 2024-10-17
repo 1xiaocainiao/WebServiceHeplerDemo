@@ -120,6 +120,7 @@ extension LXWebServiceHelper {
 //        }.eraseToAnyPublisher()
 //    }
     
+    /// progress暂时不可用
     func requestJsonModelPublisher<R: LXMoyaTargetType>(_ type: R,
                                                         progressBlock: ProgressBlock?) -> AnyPublisher<ResultContainer<T>, Never> {
         return Future<ResultContainer<T>, Never> { promise in
