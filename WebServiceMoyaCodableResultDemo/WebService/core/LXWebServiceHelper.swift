@@ -2,6 +2,7 @@
 
 import Foundation
 import Moya
+import Combine
 
 typealias ResultContainer<T: Codable> = Result<LXResponseContainer<T>, Error>
 
@@ -13,7 +14,7 @@ open class LXWebServiceHelper<T> where T: Codable {
     @discardableResult
     func requestJSONModel<R: LXMoyaTargetType>(_ type: R,
                                                progressBlock: ProgressBlock? = nil,
-                                               completionHandle: @escaping ResultContainerHandle) -> Cancellable? {
+                                               completionHandle: @escaping ResultContainerHandle) -> Moya.Cancellable? {
         return requestJSONObject(type, progressBlock: progressBlock) { result in
             let result: ResultContainer<T> = parseResponseToResult(responseObject: result, error: nil)
             completionHandle(result)
@@ -62,7 +63,7 @@ open class LXWebServiceHelper<T> where T: Codable {
     private func requestJSONObject<R: LXMoyaTargetType>(_ type: R,
                                                 progressBlock: ProgressBlock?,
                                                 completionHandle: @escaping JSONObjectHandle,
-                                                exceptionHandle: @escaping (Error?) -> Void) -> Cancellable? {
+                                                        exceptionHandle: @escaping (Error?) -> Void) -> Moya.Cancellable? {
         let provider = createProvider(type: type)
         let cancelable = provider.request(type, callbackQueue: nil, progress: progressBlock) { result in
             switch result {
@@ -92,4 +93,41 @@ open class LXWebServiceHelper<T> where T: Codable {
         return cancelable
     }
 }
+
+// MARK: - combine支持, 注意下面两种写法的不同
+extension LXWebServiceHelper {
+    
+//    func requestJsonModelPublisher<R: LXMoyaTargetType>(_ type: R,
+//                                                        progressBlock: ProgressBlock?) -> AnyPublisher<LXResponseContainer<T>, Error> {
+//        return Future<LXResponseContainer<T>, Error> { promise in
+//            self.requestJSONObject(type, progressBlock: progressBlock) { response in
+//                let result: ResultContainer<T> = parseResponseToResult(responseObject: response, error: nil)
+//                switch result {
+//                case .success(let container):
+//                    promise(.success(container))
+//                case .failure(let error):
+//                    promise(.failure(error))
+//                }
+//            } exceptionHandle: { error in
+//                let result: ResultContainer<T> = parseResponseToResult(responseObject: nil, error: error)
+//                switch result {
+//                case .success(let container):
+//                    promise(.success(container))
+//                case .failure(let error):
+//                    promise(.failure(error))
+//                }
+//            }
+//        }.eraseToAnyPublisher()
+//    }
+    
+    func requestJsonModelPublisher<R: LXMoyaTargetType>(_ type: R,
+                                                        progressBlock: ProgressBlock?) -> AnyPublisher<ResultContainer<T>, Never> {
+        return Future<ResultContainer<T>, Never> { promise in
+            self.requestJSONModel(type, progressBlock: progressBlock) { result in
+                promise(.success(result))
+            }
+        }.eraseToAnyPublisher()
+    }
+}
+
 
