@@ -51,6 +51,7 @@
 		04401D462CBE132E001E1E3F /* ServerKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServerKey.swift; sourceTree = "<group>"; };
 		04401D532CBE13CC001E1E3F /* DebugPrint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DebugPrint.swift; sourceTree = "<group>"; };
 		04401D552CBE1C7A001E1E3F /* CityInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CityInfo.swift; sourceTree = "<group>"; };
+		04E4BD092CC22B880038271B /* TokenRefreshPlugin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenRefreshPlugin.swift; sourceTree = "<group>"; };
 		6CDD91B0870E4AD43F27B0C9 /* Pods-WebServiceMoyaCodableResultDemo.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WebServiceMoyaCodableResultDemo.release.xcconfig"; path = "Target Support Files/Pods-WebServiceMoyaCodableResultDemo/Pods-WebServiceMoyaCodableResultDemo.release.xcconfig"; sourceTree = "<group>"; };
 		702A8AE1DD065F210D88BC8B /* Pods_WebServiceMoyaCodableResultDemo.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_WebServiceMoyaCodableResultDemo.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		730689C9B162C9F573AA3228 /* Pods-WebServiceMoyaCodableResultDemo.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WebServiceMoyaCodableResultDemo.debug.xcconfig"; path = "Target Support Files/Pods-WebServiceMoyaCodableResultDemo/Pods-WebServiceMoyaCodableResultDemo.debug.xcconfig"; sourceTree = "<group>"; };
@@ -133,6 +134,7 @@
 				04401D442CBE132E001E1E3F /* LXWebServiceHelper.swift */,
 				04401D452CBE132E001E1E3F /* MoyaTargetEx.swift */,
 				04401D462CBE132E001E1E3F /* ServerKey.swift */,
+				04E4BD092CC22B880038271B /* TokenRefreshPlugin.swift */,
 			);
 			path = core;
 			sourceTree = "<group>";
