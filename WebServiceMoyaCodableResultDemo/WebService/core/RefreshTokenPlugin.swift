@@ -11,6 +11,39 @@
 import Foundation
 import Moya
 
+//public class RefreshTokenPlugin: PluginType {
+//    
+//    public init() {
+//        
+//    }
+//    
+//    public func prepare(_ request: URLRequest, target: TargetType) -> URLRequest {
+//        
+//        printl(message: "prepare request")
+//        
+//        guard let authorizable = target as? AccessTokenAuthorizable,
+//              let authorizationType = authorizable.authorizationType else {
+//            
+//            return request
+//        }
+//        
+//        RefreshTokenManager.default.checkAndRefreshTokenIfNeeded { finish in
+//            printl(message: "refresh token finish")
+//        }
+//        
+//        var request = request
+//        let authValue = authorizationType.value + " " + RefreshTokenManager.default.token
+//        request.addValue(authValue, forHTTPHeaderField: "Authorization")
+//        
+//        printl(message: "prepare request finish")
+//
+//        return request
+//    }
+//    
+//}
+
+// 另一种写法
+
 public class RefreshTokenPlugin: PluginType {
     
     private var semaphore = DispatchSemaphore(value: 0)

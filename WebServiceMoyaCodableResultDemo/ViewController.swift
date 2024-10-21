@@ -26,7 +26,9 @@ class ViewController: UIViewController {
         
 //        testNormalRequest()
         
-        testPublisherRequest()
+//        testPublisherRequest()
+        
+        testRefreshToken()
         // Do any additional setup after loading the view.
     }
     
@@ -41,14 +43,35 @@ class ViewController: UIViewController {
         }
     }
 
-    func testPublisherRequest() {
-        let publisher = LXWebServiceHelper<CityInfo>().requestJsonModelPublisher(TestRequestType.cityTest, progressBlock: nil)
-        
-        
-//        publisher.sink { completion in
-//            switch completion {
-//            case .finished:
-//                printl(message: "finished")
+//    func testPublisherRequest() {
+//        let publisher = LXWebServiceHelper<CityInfo>().requestJsonModelPublisher(TestRequestType.cityTest, progressBlock: nil)
+//        
+//        
+////        publisher.sink { completion in
+////            switch completion {
+////            case .finished:
+////                printl(message: "finished")
+////            case .failure(let error):
+////                printl(message: error.localizedDescription)
+////                guard let error = error as? LXError else {
+////                    return
+////                }
+////                if case .serverDataFormatError = error {
+////                    printl(message: "缺失状态码")
+////                }
+////                if case .dataContentTransformToModelFailed = error {
+////                    printl(message: "json to model failed")
+////                }
+////            }
+////        } receiveValue: { container in
+////            printl(message: container.value?.city)
+////        }.store(in: &cancellables)
+//          
+//        
+//        publisher.sink { reuslt in
+//            switch reuslt {
+//            case .success(let container):
+//                printl(message: container.value?.city)
 //            case .failure(let error):
 //                printl(message: error.localizedDescription)
 //                guard let error = error as? LXError else {
@@ -61,28 +84,19 @@ class ViewController: UIViewController {
 //                    printl(message: "json to model failed")
 //                }
 //            }
-//        } receiveValue: { container in
-//            printl(message: container.value?.city)
 //        }.store(in: &cancellables)
-          
-        
-        publisher.sink { reuslt in
-            switch reuslt {
-            case .success(let container):
-                printl(message: container.value?.city)
-            case .failure(let error):
-                printl(message: error.localizedDescription)
-                guard let error = error as? LXError else {
-                    return
-                }
-                if case .serverDataFormatError = error {
-                    printl(message: "缺失状态码")
-                }
-                if case .dataContentTransformToModelFailed = error {
-                    printl(message: "json to model failed")
-                }
+//    }
+    
+    func testRefreshToken() {
+        for index in 0..<1 {
+            printl(message: "prepare request \(index)")
+            
+            RefreshTokenManager.default.checkAndRefreshTokenIfNeeded { finish in
+                printl(message: "refresh token finish \(index)")
             }
-        }.store(in: &cancellables)
+            
+            printl(message: "prepare request finish \(index)")
+        }
     }
 
 }
