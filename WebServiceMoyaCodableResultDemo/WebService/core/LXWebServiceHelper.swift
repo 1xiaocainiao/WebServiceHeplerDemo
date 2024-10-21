@@ -94,41 +94,5 @@ open class LXWebServiceHelper<T> where T: Codable {
     }
 }
 
-// MARK: - combine支持, 注意下面两种写法的不同
-extension LXWebServiceHelper {
-    
-//    func requestJsonModelPublisher<R: LXMoyaTargetType>(_ type: R,
-//                                                        progressBlock: ProgressBlock?) -> AnyPublisher<LXResponseContainer<T>, Error> {
-//        return Future<LXResponseContainer<T>, Error> { promise in
-//            self.requestJSONObject(type, progressBlock: progressBlock) { response in
-//                let result: ResultContainer<T> = parseResponseToResult(responseObject: response, error: nil)
-//                switch result {
-//                case .success(let container):
-//                    promise(.success(container))
-//                case .failure(let error):
-//                    promise(.failure(error))
-//                }
-//            } exceptionHandle: { error in
-//                let result: ResultContainer<T> = parseResponseToResult(responseObject: nil, error: error)
-//                switch result {
-//                case .success(let container):
-//                    promise(.success(container))
-//                case .failure(let error):
-//                    promise(.failure(error))
-//                }
-//            }
-//        }.eraseToAnyPublisher()
-//    }
-    
-    /// progress暂时不可用
-    func requestJsonModelPublisher<R: LXMoyaTargetType>(_ type: R,
-                                                        progressBlock: ProgressBlock?) -> AnyPublisher<ResultContainer<T>, Never> {
-        return Future<ResultContainer<T>, Never> { promise in
-            self.requestJSONModel(type, progressBlock: progressBlock) { result in
-                promise(.success(result))
-            }
-        }.eraseToAnyPublisher()
-    }
-}
 
 

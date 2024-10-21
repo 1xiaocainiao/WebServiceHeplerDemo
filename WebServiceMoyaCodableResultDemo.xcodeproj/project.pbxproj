@@ -30,6 +30,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		040D97352CC63A1A0005ADF6 /* RefreshTokenPlugin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RefreshTokenPlugin.swift; sourceTree = "<group>"; };
 		04401CFF2CBCCC9E001E1E3F /* WebServiceMoyaCodableResultDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WebServiceMoyaCodableResultDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		04401D172CBCCCA8001E1E3F /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		04401D182CBCCCA8001E1E3F /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -135,6 +136,7 @@
 				04401D452CBE132E001E1E3F /* MoyaTargetEx.swift */,
 				04401D462CBE132E001E1E3F /* ServerKey.swift */,
 				04E4BD092CC22B880038271B /* TokenRefreshPlugin.swift */,
+				040D97352CC63A1A0005ADF6 /* RefreshTokenPlugin.swift */,
 			);
 			path = core;
 			sourceTree = "<group>";
