@@ -46,7 +46,7 @@ open class LXWebServiceHelper<T> where T: Codable {
 #else
 #endif
         
-        let provider = MoyaProvider<R>(plugins: plugins)
+        let provider = MoyaProvider<R>(requestClosure: MoyaProvider<R>.endpointResolver(), plugins: plugins)
         
         return provider
     }

@@ -7,8 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		040D97382CC641DE0005ADF6 /* RefreshTokenManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 040D97372CC641DE0005ADF6 /* RefreshTokenManager.swift */; };
-		040D97392CC644160005ADF6 /* RefreshTokenPlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 040D97352CC63A1A0005ADF6 /* RefreshTokenPlugin.swift */; };
+		040D973B2CC65C7B0005ADF6 /* MoyaProviderEX.swift in Sources */ = {isa = PBXBuildFile; fileRef = 040D973A2CC65C7B0005ADF6 /* MoyaProviderEX.swift */; };
 		04401D212CBCCCA8001E1E3F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04401D172CBCCCA8001E1E3F /* AppDelegate.swift */; };
 		04401D222CBCCCA8001E1E3F /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04401D1E2CBCCCA8001E1E3F /* SceneDelegate.swift */; };
 		04401D232CBCCCA8001E1E3F /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04401D1F2CBCCCA8001E1E3F /* ViewController.swift */; };
@@ -34,6 +33,7 @@
 /* Begin PBXFileReference section */
 		040D97352CC63A1A0005ADF6 /* RefreshTokenPlugin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RefreshTokenPlugin.swift; sourceTree = "<group>"; };
 		040D97372CC641DE0005ADF6 /* RefreshTokenManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RefreshTokenManager.swift; sourceTree = "<group>"; };
+		040D973A2CC65C7B0005ADF6 /* MoyaProviderEX.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoyaProviderEX.swift; sourceTree = "<group>"; };
 		04401CFF2CBCCC9E001E1E3F /* WebServiceMoyaCodableResultDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WebServiceMoyaCodableResultDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		04401D172CBCCCA8001E1E3F /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		04401D182CBCCCA8001E1E3F /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -141,6 +141,7 @@
 				04E4BD092CC22B880038271B /* TokenRefreshPlugin.swift */,
 				040D97352CC63A1A0005ADF6 /* RefreshTokenPlugin.swift */,
 				040D97372CC641DE0005ADF6 /* RefreshTokenManager.swift */,
+				040D973A2CC65C7B0005ADF6 /* MoyaProviderEX.swift */,
 			);
 			path = core;
 			sourceTree = "<group>";
@@ -278,15 +279,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				04401D212CBCCCA8001E1E3F /* AppDelegate.swift in Sources */,
-				040D97382CC641DE0005ADF6 /* RefreshTokenManager.swift in Sources */,
 				04401D482CBE132E001E1E3F /* LXUploadFileInfo.swift in Sources */,
 				04401D492CBE132E001E1E3F /* ServerKey.swift in Sources */,
 				04401D4A2CBE132E001E1E3F /* MoyaTargetEx.swift in Sources */,
 				04401D4B2CBE132E001E1E3F /* CodableEx.swift in Sources */,
 				04401D4C2CBE132E001E1E3F /* LXError.swift in Sources */,
 				04401D4D2CBE132E001E1E3F /* TestModel.swift in Sources */,
-				040D97392CC644160005ADF6 /* RefreshTokenPlugin.swift in Sources */,
 				04401D4E2CBE132E001E1E3F /* LXWebServiceHelper.swift in Sources */,
+				040D973B2CC65C7B0005ADF6 /* MoyaProviderEX.swift in Sources */,
 				04401D4F2CBE132E001E1E3F /* TestPolicyApi.swift in Sources */,
 				04401D502CBE132E001E1E3F /* LXAESEncoding.swift in Sources */,
 				04401D512CBE132E001E1E3F /* LXHandleRequestPlugin.swift in Sources */,

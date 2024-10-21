@@ -24,11 +24,11 @@ class ViewController: UIViewController {
 //            }
 //        }
         
-//        testNormalRequest()
+        testNormalRequest()
         
 //        testPublisherRequest()
         
-        testRefreshToken()
+//        testRefreshToken()
         // Do any additional setup after loading the view.
     }
     
@@ -88,15 +88,15 @@ class ViewController: UIViewController {
 //    }
     
     func testRefreshToken() {
-        for index in 0..<1 {
-            printl(message: "prepare request \(index)")
-            
-            RefreshTokenManager.default.checkAndRefreshTokenIfNeeded { finish in
-                printl(message: "refresh token finish \(index)")
-            }
-            
-            printl(message: "prepare request finish \(index)")
-        }
+//        for index in 0..<1 {
+//            printl(message: "prepare request \(index)")
+//            
+//            RefreshTokenManager.default.checkAndRefreshTokenIfNeeded { finish in
+//                printl(message: "refresh token finish \(index)")
+//            }
+//            
+//            printl(message: "prepare request finish \(index)")
+//        }
     }
 
 }

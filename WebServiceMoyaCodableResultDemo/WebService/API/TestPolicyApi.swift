@@ -43,4 +43,17 @@ extension TestRequestType: LXMoyaTargetType {
             return .get
         }
     }
+    
+    
+    var baseURL : URL {
+        switch self {
+        case .baidu:
+            return URL(string: apiHost)!
+        case let .upload(_, params):
+            return URL(string: cityHost)!
+        case .cityTest:
+            return URL(string: cityHost)!
+        }
+        
+    }
 }
