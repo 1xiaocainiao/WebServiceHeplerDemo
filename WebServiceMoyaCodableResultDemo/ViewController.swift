@@ -49,8 +49,7 @@ class ViewController: UIViewController {
     
     func testDataBase() {
         do {
-            let dbPath = "path/to/database.sqlite"
-            let dbManager = DatabaseManager(path: dbPath)
+            let dbManager = DatabaseManager()
             
             // 创建表
             try dbManager.createTable(User())
@@ -63,14 +62,14 @@ class ViewController: UIViewController {
             user.id = 1
             user.name = "张三 李四 王麻子"
             user.profile = [profile]
-            try dbManager.insert(user)
+            user.isSelf = true
+//            try dbManager.insert(user)
+            
+            _ = dbManager.deleteTable(from: User.tableName, otherSqlDic: [:])
             
             let temp = try dbManager.query(User(), where: "id = 1")
             print(temp)
             
-            // 查询数据
-//            let users = try dbManager.query(User.self, where: "id = 1")
-//            print(users)
         } catch {
             print("Error: \(error)")
         }

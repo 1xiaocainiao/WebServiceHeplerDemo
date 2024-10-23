@@ -77,6 +77,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		040D977D2CC8C6D00005ADF6 /* Database */ = {
+			isa = PBXGroup;
+			children = (
+				040D97792CC7AFFD0005ADF6 /* DatabaseManager.swift */,
+				040D977B2CC7B17B0005ADF6 /* User.swift */,
+			);
+			path = Database;
+			sourceTree = "<group>";
+		};
 		04401CF62CBCCC9E001E1E3F = {
 			isa = PBXGroup;
 			children = (
@@ -98,10 +107,9 @@
 		04401D202CBCCCA8001E1E3F /* WebServiceMoyaCodableResultDemo */ = {
 			isa = PBXGroup;
 			children = (
+				040D977D2CC8C6D00005ADF6 /* Database */,
 				04401D282CBCE678001E1E3F /* WebService */,
 				04401D172CBCCCA8001E1E3F /* AppDelegate.swift */,
-				040D97792CC7AFFD0005ADF6 /* DatabaseManager.swift */,
-				040D977B2CC7B17B0005ADF6 /* User.swift */,
 				04401D532CBE13CC001E1E3F /* DebugPrint.swift */,
 				04401D182CBCCCA8001E1E3F /* Assets.xcassets */,
 				04401D192CBCCCA8001E1E3F /* Info.plist */,

@@ -14,6 +14,7 @@ class User: DatabaseTable {
     var id: Int?
     var name: String?
     var profile: [Profile]? // 嵌套模型
+    var isSelf: Bool?
 }
 
 class Profile: Codable {
