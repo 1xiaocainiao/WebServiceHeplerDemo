@@ -1,5 +1,10 @@
 PODS:
   - Alamofire (5.9.1)
+  - FMDB (2.7.12):
+    - FMDB/standard (= 2.7.12)
+  - FMDB/Core (2.7.12)
+  - FMDB/standard (2.7.12):
+    - FMDB/Core
   - Moya (15.0.0):
     - Moya/Core (= 15.0.0)
   - Moya/Combine (15.0.0):
@@ -8,18 +13,21 @@ PODS:
     - Alamofire (~> 5.0)
 
 DEPENDENCIES:
+  - FMDB
   - Moya (~> 15.0)
   - Moya/Combine (~> 15.0)
 
 SPEC REPOS:
   trunk:
     - Alamofire
+    - FMDB
     - Moya
 
 SPEC CHECKSUMS:
   Alamofire: f36a35757af4587d8e4f4bfa223ad10be2422b8c
+  FMDB: 728731dd336af3936ce00f91d9d8495f5718a0e6
   Moya: 138f0573e53411fb3dc17016add0b748dfbd78ee
 
-PODFILE CHECKSUM: 2d7d4d1ec419a6b16128825a69b4d74f80a69502
+PODFILE CHECKSUM: c3459edb5758793163f0c0f23299d8cdfabc8a9b
 
 COCOAPODS: 1.15.2

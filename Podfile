@@ -7,6 +7,7 @@ target 'WebServiceMoyaCodableResultDemo' do
 
   pod 'Moya', '~> 15.0'
   pod 'Moya/Combine', '~> 15.0'
+  pod 'FMDB'
 
   # Pods for WebServiceMoyaCodableResultDemo
 

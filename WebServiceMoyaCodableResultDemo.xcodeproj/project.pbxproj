@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		040D973B2CC65C7B0005ADF6 /* MoyaProviderEX.swift in Sources */ = {isa = PBXBuildFile; fileRef = 040D973A2CC65C7B0005ADF6 /* MoyaProviderEX.swift */; };
+		040D977A2CC7AFFD0005ADF6 /* DatabaseManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 040D97792CC7AFFD0005ADF6 /* DatabaseManager.swift */; };
+		040D977C2CC7B17B0005ADF6 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 040D977B2CC7B17B0005ADF6 /* User.swift */; };
 		04401D212CBCCCA8001E1E3F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04401D172CBCCCA8001E1E3F /* AppDelegate.swift */; };
 		04401D222CBCCCA8001E1E3F /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04401D1E2CBCCCA8001E1E3F /* SceneDelegate.swift */; };
 		04401D232CBCCCA8001E1E3F /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04401D1F2CBCCCA8001E1E3F /* ViewController.swift */; };
@@ -34,6 +36,8 @@
 		040D97352CC63A1A0005ADF6 /* RefreshTokenPlugin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RefreshTokenPlugin.swift; sourceTree = "<group>"; };
 		040D97372CC641DE0005ADF6 /* RefreshTokenManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RefreshTokenManager.swift; sourceTree = "<group>"; };
 		040D973A2CC65C7B0005ADF6 /* MoyaProviderEX.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoyaProviderEX.swift; sourceTree = "<group>"; };
+		040D97792CC7AFFD0005ADF6 /* DatabaseManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatabaseManager.swift; sourceTree = "<group>"; };
+		040D977B2CC7B17B0005ADF6 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		04401CFF2CBCCC9E001E1E3F /* WebServiceMoyaCodableResultDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WebServiceMoyaCodableResultDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		04401D172CBCCCA8001E1E3F /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		04401D182CBCCCA8001E1E3F /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -96,6 +100,8 @@
 			children = (
 				04401D282CBCE678001E1E3F /* WebService */,
 				04401D172CBCCCA8001E1E3F /* AppDelegate.swift */,
+				040D97792CC7AFFD0005ADF6 /* DatabaseManager.swift */,
+				040D977B2CC7B17B0005ADF6 /* User.swift */,
 				04401D532CBE13CC001E1E3F /* DebugPrint.swift */,
 				04401D182CBCCCA8001E1E3F /* Assets.xcassets */,
 				04401D192CBCCCA8001E1E3F /* Info.plist */,
@@ -280,6 +286,7 @@
 			files = (
 				04401D212CBCCCA8001E1E3F /* AppDelegate.swift in Sources */,
 				04401D482CBE132E001E1E3F /* LXUploadFileInfo.swift in Sources */,
+				040D977A2CC7AFFD0005ADF6 /* DatabaseManager.swift in Sources */,
 				04401D492CBE132E001E1E3F /* ServerKey.swift in Sources */,
 				04401D4A2CBE132E001E1E3F /* MoyaTargetEx.swift in Sources */,
 				04401D4B2CBE132E001E1E3F /* CodableEx.swift in Sources */,
@@ -294,6 +301,7 @@
 				04401D222CBCCCA8001E1E3F /* SceneDelegate.swift in Sources */,
 				04401D232CBCCCA8001E1E3F /* ViewController.swift in Sources */,
 				04401D562CBE1C7A001E1E3F /* CityInfo.swift in Sources */,
+				040D977C2CC7B17B0005ADF6 /* User.swift in Sources */,
 				04401D542CBE13CC001E1E3F /* DebugPrint.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

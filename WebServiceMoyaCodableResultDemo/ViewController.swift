@@ -24,11 +24,15 @@ class ViewController: UIViewController {
 //            }
 //        }
         
-        testNormalRequest()
+//        testNormalRequest()
         
 //        testPublisherRequest()
         
 //        testRefreshToken()
+        
+        
+        testDataBase()
+
         // Do any additional setup after loading the view.
     }
     
@@ -40,6 +44,35 @@ class ViewController: UIViewController {
             case .failure(let error):
                 printl(message: "出错了")
             }
+        }
+    }
+    
+    func testDataBase() {
+        do {
+            let dbPath = "path/to/database.sqlite"
+            let dbManager = DatabaseManager(path: dbPath)
+            
+            // 创建表
+            try dbManager.createTable(User())
+            
+            // 插入数据
+            let profile = Profile()
+            profile.age = 25
+            profile.email = "test@example.com"
+            let user = User()
+            user.id = 1
+            user.name = "张三 李四 王麻子"
+            user.profile = [profile]
+            try dbManager.insert(user)
+            
+            let temp = try dbManager.query(User(), where: "id = 1")
+            print(temp)
+            
+            // 查询数据
+//            let users = try dbManager.query(User.self, where: "id = 1")
+//            print(users)
+        } catch {
+            print("Error: \(error)")
         }
     }
 
