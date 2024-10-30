@@ -43,7 +43,7 @@ func parseResponseToResult<T: Codable>(responseObject: Any?, error: Error?) -> R
         
         // 如果data就是结果，直接赋值
         if let dataObject = jsonValue as? T {
-            return .success(LXResponseContainer(rawObject: jsonObject,
+            return .success(LXResponseContainer(rawObject: jsonValue,
                                                 code: statusCode,
                                                 message: message,
                                                 value: dataObject))
@@ -56,7 +56,7 @@ func parseResponseToResult<T: Codable>(responseObject: Any?, error: Error?) -> R
         do {
             let model = try JSONDecoder().decode(T.self, from: jsonData)
             return .success(LXResponseContainer(
-                                                rawObject: jsonObject,
+                                                rawObject: jsonValue,
                                                 code: statusCode,
                                                 message: message,
                                                 value: model))
