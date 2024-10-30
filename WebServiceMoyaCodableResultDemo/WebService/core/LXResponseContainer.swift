@@ -35,12 +35,12 @@ func parseResponseToResult<T: Codable>(responseObject: Any?, error: Error?) -> R
         return .failure(LXError.serverDataFormatError)
     }
     
+    /// 检查value数据是否存在
+    guard let jsonValue = jsonObject[ServerKey.value.rawValue] else {
+        return .failure(LXError.missDataContent)
+    }
+    
     if statusCode == ResponseCode.successResponseStatusCode {
-        /// 检查value数据是否存在
-        guard let jsonValue = jsonObject[ServerKey.value.rawValue] else {
-            return .failure(LXError.missDataContent)
-        }
-        
         // 如果data就是结果，直接赋值
         if let dataObject = jsonValue as? T {
             return .success(LXResponseContainer(rawObject: jsonValue,
