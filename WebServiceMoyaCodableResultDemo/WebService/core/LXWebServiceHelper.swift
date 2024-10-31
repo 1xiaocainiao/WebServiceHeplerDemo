@@ -11,15 +11,35 @@ open class LXWebServiceHelper<T> where T: Codable {
     typealias ExceptionHandle = (Error?) -> Void
     typealias ResultContainerHandle = (ResultContainer<T>) -> Void
     
+    typealias AutoLogOutHandler = (() -> Void)
+    /// bool 返回是否需要自动处理
+    typealias ToastHandler = ((LXError) -> (autoShow: Bool, type: ToastType))
+    
+    var autoLogoutHandler: AutoLogOutHandler?
+    var toastHandler: ToastHandler?
+    
+    init() {
+        self.toastHandler = { error in
+            return (autoShow: true, type: .toast)
+        }
+    }
+    
     @discardableResult
     func requestJSONModel<R: LXMoyaTargetType>(_ type: R,
                                                progressBlock: ProgressBlock? = nil,
                                                completionHandle: @escaping ResultContainerHandle) -> Moya.Cancellable? {
-        return requestJSONObject(type, progressBlock: progressBlock) { result in
+        return requestJSONObject(type, progressBlock: progressBlock) { [weak self] result in
             let result: ResultContainer<T> = parseResponseToResult(responseObject: result, error: nil)
+            switch result {
+            case .success( _):
+                break
+            case .failure(let error):
+                self?.handleError(error)
+            }
             completionHandle(result)
-        } exceptionHandle: { error in
+        } exceptionHandle: { [weak self] error in
             let result: ResultContainer<T> = parseResponseToResult(responseObject: nil, error: error)
+            self?.handleError(error)
             completionHandle(result)
         }
     }
@@ -46,7 +66,7 @@ open class LXWebServiceHelper<T> where T: Codable {
 #else
 #endif
         
-        let provider = MoyaProvider<R>(requestClosure: MoyaProvider<R>.endpointResolver(), plugins: plugins)
+        let provider = MoyaProvider<R>(plugins: plugins)
         
         return provider
     }
@@ -91,6 +111,12 @@ open class LXWebServiceHelper<T> where T: Codable {
             }
         }
         return cancelable
+    }
+}
+
+extension LXWebServiceHelper {
+    fileprivate func handleError(_ error: Error?) {
+        ErrorHandle.handleError(error, autoLogoutHandler: autoLogoutHandler, toastHandler: toastHandler)
     }
 }
 

@@ -37,7 +37,11 @@ class ViewController: UIViewController {
     }
     
     func testNormalRequest() {
-        LXWebServiceHelper<CityInfo>().requestJSONModel(TestRequestType.cityTest, progressBlock: nil) { result in
+        let helper = LXWebServiceHelper<CityInfo>()
+        helper.toastHandler = { error in
+            return (autoShow: true, type: .toast)
+        }
+        helper.requestJSONModel(TestRequestType.cityTest, progressBlock: nil) { result in
             switch result {
             case .success(let container):
                 printl(message: container.value?.city)
