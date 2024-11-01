@@ -24,14 +24,14 @@ class ViewController: UIViewController {
 //            }
 //        }
         
-//        testNormalRequest()
+        testNormalRequest()
         
 //        testPublisherRequest()
         
 //        testRefreshToken()
         
         
-        testDataBase()
+//        testDataBase()
 
         // Do any additional setup after loading the view.
     }

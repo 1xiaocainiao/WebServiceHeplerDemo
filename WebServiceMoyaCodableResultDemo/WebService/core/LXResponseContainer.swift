@@ -22,7 +22,11 @@ struct LXResponseContainer<T: Codable> {
     let value: T?
 }
 
+/// 如果data返回的空数组，T 传 [String] 里面任意类型都可以，一般用于不需要返回值，但是data又是空数组的情况
 func parseResponseToResult<T: Codable>(responseObject: Any?, error: Error?) -> ResultContainer<T> {
+    
+//    let test = ["message": "success感谢又拍云(upyun.com)提供CDN赞助", "status":200,"date":"20241101","time":"2024-11-01 09:08:51","cityInfo":[]] as [String : Any]
+    
     /// 有错误就直接返回
     if let error = error {
         return .failure(error)
