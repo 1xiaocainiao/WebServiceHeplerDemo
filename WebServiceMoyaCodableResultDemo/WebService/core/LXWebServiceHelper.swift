@@ -71,7 +71,7 @@ open class LXWebServiceHelper<T> where T: Codable {
                 request.timeoutInterval = 30
                 done(.success(request))
             } catch {
-                return
+                done(.failure(MoyaError.underlying(error, nil)))
             }
         }
         
