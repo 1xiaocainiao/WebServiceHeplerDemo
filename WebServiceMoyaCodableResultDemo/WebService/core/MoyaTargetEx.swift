@@ -110,7 +110,12 @@ public extension LXMoyaTargetType {
     }
     
     var encoding: ParameterEncoding {
-        return URLEncoding.default
+        switch method {
+        case .get:
+            return URLEncoding.default
+        default:
+            return JSONEncoding.default
+        }
     }
     
     var task: Task {
