@@ -11,9 +11,9 @@ open class LXWebServiceHelper<T> where T: Codable {
     typealias ExceptionHandle = (Error?) -> Void
     typealias ResultContainerHandle = (ResultContainer<T>) -> Void
     
-    typealias AutoLogOutHandler = (() -> Void)
+    typealias AutoLogOutHandler = () -> Void
     /// bool 返回是否需要自动处理
-    typealias ToastHandler = ((LXError) -> (autoShow: Bool, type: ToastType))
+    typealias ToastHandler = (LXError) -> (autoShow: Bool, type: ToastType)
     
     var autoLogoutHandler: AutoLogOutHandler?
     var toastHandler: ToastHandler?
