@@ -65,17 +65,18 @@ open class LXWebServiceHelper<T> where T: Codable {
         plugins.append(NetworkLoggerPlugin(configuration: .init(logOptions: [.requestHeaders, .requestBody, .successResponseBody])))
 #else
 #endif
-        let requestTimeoutClosure = { (endpoint: Endpoint, done: @escaping MoyaProvider<R>.RequestResultClosure) in
-            do {
-                var request = try endpoint.urlRequest()
-                request.timeoutInterval = 30
-                done(.success(request))
-            } catch {
-                done(.failure(MoyaError.underlying(error, nil)))
-            }
-        }
+//        let requestTimeoutClosure = { (endpoint: Endpoint, done: @escaping MoyaProvider<R>.RequestResultClosure) in
+//            do {
+//                var request = try endpoint.urlRequest()
+//                request.timeoutInterval = 30
+//                done(.success(request))
+//            } catch {
+//                done(.failure(MoyaError.underlying(error, nil)))
+//            }
+//        }
+        let requestClorure = MoyaProvider<R>.endpointResolver()
         
-        let provider = MoyaProvider<R>(requestClosure: requestTimeoutClosure, plugins: plugins)
+        let provider = MoyaProvider<R>(requestClosure: requestClorure, plugins: plugins)
         
         return provider
     }
