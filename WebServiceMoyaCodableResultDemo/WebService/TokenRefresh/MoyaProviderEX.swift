@@ -8,6 +8,7 @@
 import Foundation
 import Moya
 
+// 这种方式一个接口的时候可行，并发有问题
 extension MoyaProvider {
     convenience init(handleRefreshToken: Bool) {
         if handleRefreshToken {
@@ -51,6 +52,8 @@ extension MoyaProvider {
                 case .success(let response):
                     let jsonObject = try? response.mapJSON()
                     printl(message: jsonObject ?? "")
+                    
+//                    request.setValue(LoginResultModel.currentInfo()?.token, forHTTPHeaderField: "Authorization")
                     
                     closure(.success(request))
                 case .failure(let error):
