@@ -58,10 +58,6 @@
 		04401D462CBE132E001E1E3F /* ServerKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServerKey.swift; sourceTree = "<group>"; };
 		04401D532CBE13CC001E1E3F /* DebugPrint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DebugPrint.swift; sourceTree = "<group>"; };
 		04401D552CBE1C7A001E1E3F /* CityInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CityInfo.swift; sourceTree = "<group>"; };
-		047CF2262CD3586700FABA3E /* MoyaRefreshToken.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoyaRefreshToken.swift; sourceTree = "<group>"; };
-		047CF2272CD3586700FABA3E /* RefreshTokenManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RefreshTokenManager.swift; sourceTree = "<group>"; };
-		047CF2282CD3586700FABA3E /* RefreshTokenPlugin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RefreshTokenPlugin.swift; sourceTree = "<group>"; };
-		047CF2292CD3586700FABA3E /* TokenRefreshPlugin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenRefreshPlugin.swift; sourceTree = "<group>"; };
 		047CF2312CD3588E00FABA3E /* ErrorHandle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorHandle.swift; sourceTree = "<group>"; };
 		04E4B24D2CE49B4B0092C8A5 /* MoyaProvider+RefreshToken.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MoyaProvider+RefreshToken.swift"; sourceTree = "<group>"; };
 		04E4B2502CE49CA70092C8A5 /* TokenRefreshManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenRefreshManager.swift; sourceTree = "<group>"; };
@@ -168,10 +164,6 @@
 			children = (
 				04E4B24D2CE49B4B0092C8A5 /* MoyaProvider+RefreshToken.swift */,
 				04E4B2502CE49CA70092C8A5 /* TokenRefreshManager.swift */,
-				047CF2262CD3586700FABA3E /* MoyaRefreshToken.swift */,
-				047CF2272CD3586700FABA3E /* RefreshTokenManager.swift */,
-				047CF2282CD3586700FABA3E /* RefreshTokenPlugin.swift */,
-				047CF2292CD3586700FABA3E /* TokenRefreshPlugin.swift */,
 			);
 			path = TokenRefresh;
 			sourceTree = "<group>";
