@@ -99,12 +99,16 @@ open class LXWebServiceHelper<T> where T: Codable {
             switch result {
             case .success(let successResponse):
                 do {
+                    
+                    let jsonObject = try successResponse.mapJSON()
+                    
 //#if DEBUG
-//                    let json = String(data: successResponse.data, encoding: .utf8) ?? ""
-//                    print(json)
+//if let jsonData = try? JSONSerialization.data(withJSONObject: jsonObject, options: .prettyPrinted),
+//   let jsonString = String(data: jsonData, encoding: .utf8) {
+//    printl(message: "response jsonString: \(jsonString)")
+//}
 //#else
 //#endif
-                    let jsonObject = try successResponse.mapJSON()
                     
                     completionHandle(jsonObject)
                 } catch  {
