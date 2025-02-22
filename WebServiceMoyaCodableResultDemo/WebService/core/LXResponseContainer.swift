@@ -45,7 +45,14 @@ func parseResponseToResult<T: Codable>(responseObject: Any?, error: Error?) -> R
     }
     
     if statusCode == ResponseCode.successResponseStatusCode {
-        // 一种对后端的容错，字典突然变空数组
+        // 对烂后端的兼容，一般不需要
+//        guard let jsonValue = jsonObject[ServerKey.value.rawValue], !(jsonValue is NSNull) else {
+//            return .success(LXResponseContainer(rawObject: nil,
+//                                                code: statusCode,
+//                                                message: message,
+//                                                value: nil))
+//        }
+//        
 //        if let tempArray = jsonValue as? Array<Any>, tempArray.isEmpty {
 //            return .success(LXResponseContainer(rawObject: nil,
 //                                                code: statusCode,
