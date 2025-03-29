@@ -32,6 +32,9 @@
 		04E4B24F2CE49C7A0092C8A5 /* MoyaProvider+RefreshToken.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04E4B24D2CE49B4B0092C8A5 /* MoyaProvider+RefreshToken.swift */; };
 		04E4B2512CE49CA70092C8A5 /* TokenRefreshManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04E4B2502CE49CA70092C8A5 /* TokenRefreshManager.swift */; };
 		5E16AFA8710CCF7A8F556F3F /* Pods_WebServiceMoyaCodableResultDemo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 702A8AE1DD065F210D88BC8B /* Pods_WebServiceMoyaCodableResultDemo.framework */; };
+		E131FA0F2D97D94800F56658 /* HighPrecisionTimingPlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = E131FA0E2D97D94800F56658 /* HighPrecisionTimingPlugin.swift */; };
+		E131FA122D97D95F00F56658 /* CacheHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = E131FA102D97D95F00F56658 /* CacheHelper.swift */; };
+		E131FA132D97D95F00F56658 /* Dictionary+ToData.swift in Sources */ = {isa = PBXBuildFile; fileRef = E131FA112D97D95F00F56658 /* Dictionary+ToData.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -64,6 +67,9 @@
 		6CDD91B0870E4AD43F27B0C9 /* Pods-WebServiceMoyaCodableResultDemo.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WebServiceMoyaCodableResultDemo.release.xcconfig"; path = "Target Support Files/Pods-WebServiceMoyaCodableResultDemo/Pods-WebServiceMoyaCodableResultDemo.release.xcconfig"; sourceTree = "<group>"; };
 		702A8AE1DD065F210D88BC8B /* Pods_WebServiceMoyaCodableResultDemo.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_WebServiceMoyaCodableResultDemo.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		730689C9B162C9F573AA3228 /* Pods-WebServiceMoyaCodableResultDemo.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WebServiceMoyaCodableResultDemo.debug.xcconfig"; path = "Target Support Files/Pods-WebServiceMoyaCodableResultDemo/Pods-WebServiceMoyaCodableResultDemo.debug.xcconfig"; sourceTree = "<group>"; };
+		E131FA0E2D97D94800F56658 /* HighPrecisionTimingPlugin.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HighPrecisionTimingPlugin.swift; sourceTree = "<group>"; };
+		E131FA102D97D95F00F56658 /* CacheHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CacheHelper.swift; sourceTree = "<group>"; };
+		E131FA112D97D95F00F56658 /* Dictionary+ToData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Dictionary+ToData.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -108,6 +114,8 @@
 		04401D202CBCCCA8001E1E3F /* WebServiceMoyaCodableResultDemo */ = {
 			isa = PBXGroup;
 			children = (
+				E131FA102D97D95F00F56658 /* CacheHelper.swift */,
+				E131FA112D97D95F00F56658 /* Dictionary+ToData.swift */,
 				047CF2302CD3586F00FABA3E /* Error */,
 				040D977D2CC8C6D00005ADF6 /* Database */,
 				04401D282CBCE678001E1E3F /* WebService */,
@@ -146,6 +154,7 @@
 		04401D472CBE132E001E1E3F /* core */ = {
 			isa = PBXGroup;
 			children = (
+				E131FA0E2D97D94800F56658 /* HighPrecisionTimingPlugin.swift */,
 				04401D3E2CBE132E001E1E3F /* CodableEx.swift */,
 				04401D3F2CBE132E001E1E3F /* LXAESEncoding.swift */,
 				04401D402CBE132E001E1E3F /* LXError.swift */,
@@ -315,6 +324,7 @@
 				04401D4A2CBE132E001E1E3F /* MoyaTargetEx.swift in Sources */,
 				04401D4B2CBE132E001E1E3F /* CodableEx.swift in Sources */,
 				04401D4C2CBE132E001E1E3F /* LXError.swift in Sources */,
+				E131FA0F2D97D94800F56658 /* HighPrecisionTimingPlugin.swift in Sources */,
 				04401D4D2CBE132E001E1E3F /* TestModel.swift in Sources */,
 				04401D4E2CBE132E001E1E3F /* LXWebServiceHelper.swift in Sources */,
 				04401D4F2CBE132E001E1E3F /* TestPolicyApi.swift in Sources */,
@@ -323,6 +333,8 @@
 				04401D512CBE132E001E1E3F /* LXHandleRequestPlugin.swift in Sources */,
 				04401D522CBE132E001E1E3F /* LXResponseContainer.swift in Sources */,
 				047CF2322CD3588E00FABA3E /* ErrorHandle.swift in Sources */,
+				E131FA132D97D95F00F56658 /* Dictionary+ToData.swift in Sources */,
+				E131FA122D97D95F00F56658 /* CacheHelper.swift in Sources */,
 				04401D222CBCCCA8001E1E3F /* SceneDelegate.swift in Sources */,
 				04E4B2512CE49CA70092C8A5 /* TokenRefreshManager.swift in Sources */,
 				04401D232CBCCCA8001E1E3F /* ViewController.swift in Sources */,
@@ -369,6 +381,7 @@
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 13.3;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -397,6 +410,7 @@
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 13.3;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
