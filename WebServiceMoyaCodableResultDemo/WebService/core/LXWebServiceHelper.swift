@@ -62,6 +62,7 @@ open class LXWebServiceHelper<T> where T: Codable {
         }
         
 #if DEBUG
+        plugins.append(HighPrecisionTimingPlugin())
         plugins.append(NetworkLoggerPlugin(configuration: .init(logOptions: [.requestHeaders, .requestBody, .successResponseBody])))
 #else
 #endif
