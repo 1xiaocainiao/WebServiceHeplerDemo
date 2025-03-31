@@ -74,9 +74,15 @@ open class LXWebServiceHelper<T> where T: Codable {
 //                done(.failure(MoyaError.underlying(error, nil)))
 //            }
 //        }
-        let requestClorure = MoyaProvider<R>.endpointResolver()
         
-        let provider = MoyaProvider<R>(requestClosure: requestClorure, plugins: plugins)
+        
+        // 包含token刷新
+//        let requestClorure = MoyaProvider<R>.endpointResolver()
+//        
+//        let provider = MoyaProvider<R>(requestClosure: requestClorure, plugins: plugins)
+        
+        // 不包含token刷新
+        let provider = MoyaProvider<R>(plugins: plugins)
         
         return provider
     }
@@ -94,6 +100,12 @@ open class LXWebServiceHelper<T> where T: Codable {
                                                 progressBlock: ProgressBlock?,
                                                 completionHandle: @escaping JSONObjectHandle,
                                                         exceptionHandle: @escaping (Error?) -> Void) -> Moya.Cancellable? {
+        
+        if !NetworkMonitor.default.isConnected {
+            exceptionHandle(LXError.networkConnectFailed)
+            return nil
+        }
+        
         let provider = createProvider(type: type)
         let cancelable = provider.request(type, callbackQueue: nil, progress: progressBlock) { result in
             switch result {
