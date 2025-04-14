@@ -15,14 +15,7 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        LXWebServiceHelper<UserInfo>().requestJSONModel(TestRequestType.baidu, progressBlock: nil) { result in
-            switch result {
-            case .success(let container):
-                printl(message: container.value?.trueName)
-            case .failure(let error):
-                printl(message: "出错了")
-            }
-        }
+        requestBaidu()
         
 //        testNormalRequest()
         
@@ -34,6 +27,21 @@ class ViewController: UIViewController {
 //        testDataBase()
 
         // Do any additional setup after loading the view.
+    }
+    
+    func requestBaidu() {
+        let context = RequestContext(options: [.auto]) { error in
+            printl(message: "自定义方法")
+        }
+        // 不传context默认是toast
+        LXWebServiceHelper<UserInfo>().requestJSONModel(TestRequestType.baidu, context: context, progressBlock: nil) { result in
+            switch result {
+            case .success(let container):
+                printl(message: container.value?.trueName)
+            case .failure(let error):
+                printl(message: "出错了")
+            }
+        }
     }
     
     func testNormalRequest() {
