@@ -103,7 +103,9 @@ open class LXWebServiceHelper<T> where T: Codable {
                                                         exceptionHandle: @escaping (Error?) -> Void) -> Moya.Cancellable? {
         
         if !NetworkMonitor.default.isConnected {
-            exceptionHandle(LXError.networkConnectFailed)
+            DispatchQueue.mainAsync {
+                exceptionHandle(LXError.networkConnectFailed)
+            }
             return nil
         }
         

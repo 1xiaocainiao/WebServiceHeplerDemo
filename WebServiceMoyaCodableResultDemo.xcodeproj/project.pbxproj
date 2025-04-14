@@ -28,6 +28,7 @@
 		04401D522CBE132E001E1E3F /* LXResponseContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04401D422CBE132E001E1E3F /* LXResponseContainer.swift */; };
 		04401D542CBE13CC001E1E3F /* DebugPrint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04401D532CBE13CC001E1E3F /* DebugPrint.swift */; };
 		04401D562CBE1C7A001E1E3F /* CityInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04401D552CBE1C7A001E1E3F /* CityInfo.swift */; };
+		045CCCF82D9BF46F0091B5DF /* DispatchQueueEX.swift in Sources */ = {isa = PBXBuildFile; fileRef = 045CCCF72D9BF46F0091B5DF /* DispatchQueueEX.swift */; };
 		047CF2322CD3588E00FABA3E /* ErrorHandle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 047CF2312CD3588E00FABA3E /* ErrorHandle.swift */; };
 		04A11F4E2D9A489800CA1216 /* Reachability.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04A11F4D2D9A489800CA1216 /* Reachability.swift */; };
 		04A11F502D9A48AA00CA1216 /* NetworkMonitor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04A11F4F2D9A48AA00CA1216 /* NetworkMonitor.swift */; };
@@ -63,6 +64,7 @@
 		04401D462CBE132E001E1E3F /* ServerKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServerKey.swift; sourceTree = "<group>"; };
 		04401D532CBE13CC001E1E3F /* DebugPrint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DebugPrint.swift; sourceTree = "<group>"; };
 		04401D552CBE1C7A001E1E3F /* CityInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CityInfo.swift; sourceTree = "<group>"; };
+		045CCCF72D9BF46F0091B5DF /* DispatchQueueEX.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DispatchQueueEX.swift; sourceTree = "<group>"; };
 		047CF2312CD3588E00FABA3E /* ErrorHandle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorHandle.swift; sourceTree = "<group>"; };
 		04A11F4D2D9A489800CA1216 /* Reachability.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Reachability.swift; sourceTree = "<group>"; };
 		04A11F4F2D9A48AA00CA1216 /* NetworkMonitor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkMonitor.swift; sourceTree = "<group>"; };
@@ -120,6 +122,7 @@
 			children = (
 				04A11F4D2D9A489800CA1216 /* Reachability.swift */,
 				04A11F4F2D9A48AA00CA1216 /* NetworkMonitor.swift */,
+				045CCCF72D9BF46F0091B5DF /* DispatchQueueEX.swift */,
 				E131FA102D97D95F00F56658 /* CacheHelper.swift */,
 				E131FA112D97D95F00F56658 /* Dictionary+ToData.swift */,
 				047CF2302CD3586F00FABA3E /* Error */,
@@ -307,9 +310,13 @@
 			inputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-WebServiceMoyaCodableResultDemo/Pods-WebServiceMoyaCodableResultDemo-frameworks-${CONFIGURATION}-input-files.xcfilelist",
 			);
+			inputPaths = (
+			);
 			name = "[CP] Embed Pods Frameworks";
 			outputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-WebServiceMoyaCodableResultDemo/Pods-WebServiceMoyaCodableResultDemo-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -335,6 +342,7 @@
 				04401D4E2CBE132E001E1E3F /* LXWebServiceHelper.swift in Sources */,
 				04401D4F2CBE132E001E1E3F /* TestPolicyApi.swift in Sources */,
 				04E4B24F2CE49C7A0092C8A5 /* MoyaProvider+RefreshToken.swift in Sources */,
+				045CCCF82D9BF46F0091B5DF /* DispatchQueueEX.swift in Sources */,
 				04401D502CBE132E001E1E3F /* LXAESEncoding.swift in Sources */,
 				04401D512CBE132E001E1E3F /* LXHandleRequestPlugin.swift in Sources */,
 				04401D522CBE132E001E1E3F /* LXResponseContainer.swift in Sources */,
