@@ -29,6 +29,8 @@ public enum LXError: Error, Equatable {
     case networkConnectTimeOut
     // 服务器连接失败
     case serverConnectionFailed
+    // 取消请求
+    case cancelledRequest
 }
 
 extension LXError {
@@ -50,6 +52,8 @@ extension LXError {
             return "service_error"
         case .exception(message: let message):
             return message
+        case .cancelledRequest:
+            return "cancel_request"
         }
     }
     
@@ -99,6 +103,9 @@ extension MoyaError {
                 case NSURLErrorSecureConnectionFailed:
                     printl(message: "安全连接失败")
                     return LXError.networkConnectFailed
+                case NSURLErrorCancelled:
+                    printl(message: "取消请求")
+                    return LXError.cancelledRequest
                 default:
                     return .exception(message: "网络错误: \(nsError.localizedDescription)")
                 }
