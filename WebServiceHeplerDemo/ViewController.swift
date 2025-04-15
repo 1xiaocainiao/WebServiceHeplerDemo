@@ -15,7 +15,11 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        requestBaidu()
+//        requestBaidu()
+        
+        
+//        requestBaiduAsync()
+        requestThrowingAsync()
         
 //        testNormalRequest()
         
@@ -115,3 +119,28 @@ class ViewController: UIViewController {
 
 }
 
+// MARK: - async await
+extension ViewController {
+    func requestBaiduAsync() {
+        Task {
+            let result = await LXWebServiceHelper<UserInfo>().requestJSONModelAsync(TestRequestType.baidu)
+            switch result {
+            case .success(let container):
+                printl(message: container.value?.trueName)
+            case .failure(let error):
+                printl(message: "出错了")
+            }
+        }
+    }
+    
+    func requestThrowingAsync() {
+        Task {
+            do {
+                let result = try await LXWebServiceHelper<UserInfo>().requestJSONModelThrowingAsync(TestRequestType.baidu)
+                printl(message: result.value?.trueName)
+            } catch {
+                printl(message: "出错了")
+            }
+        }
+    }
+}

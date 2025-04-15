@@ -10,7 +10,7 @@ import Moya
 
 open class LXWebServiceHelper<T> where T: Codable {
     typealias JSONObjectHandle = (Any) -> Void
-    typealias ExceptionHandle = (LXError?) -> Void
+    typealias ExceptionHandle = (LXError) -> Void
     typealias ResultContainerHandle = (LXResult<T>) -> Void
     
     @discardableResult
@@ -39,9 +39,9 @@ open class LXWebServiceHelper<T> where T: Codable {
     @discardableResult
     func requestJSONRawObject<R: LXMoyaTargetType>(_ type: R,
                                                    context: RequestContext = .init(),
-                                                progressBlock: ProgressBlock?,
+                                                progressBlock: ProgressBlock? = nil,
                                                 completionHandle: @escaping JSONObjectHandle,
-                                                exceptionHandle: @escaping (Error?) -> Void) -> Moya.Cancellable?  {
+                                                exceptionHandle: @escaping (LXError) -> Void) -> Moya.Cancellable?  {
         return requestJSONObject(type,
                                  context: context,
                                  progressBlock: progressBlock,
@@ -54,8 +54,6 @@ open class LXWebServiceHelper<T> where T: Codable {
         let activityPlugin = NetworkActivityPlugin { state, targetType in
             self.networkActiviyIndicatorVisible(visibile: state == .began)
         }
-        
-        
         
         let crePlugin = type.credentials
         
@@ -150,8 +148,66 @@ open class LXWebServiceHelper<T> where T: Codable {
     }
 }
 
+// MARK: - 错误处理
 extension LXWebServiceHelper {
     fileprivate func handleError(_ error: LXError, context: RequestContext) {
         DefaultErrorHandler.handle(error: error, context: context)
+    }
+}
+
+// MARK: - async await支持
+extension LXWebServiceHelper {
+    func requestJSONRawObjectAsync<R: LXMoyaTargetType>(
+        _ type: R,
+        context: RequestContext = .init()
+    ) async throws -> Any {
+        try await withCheckedThrowingContinuation { continuation in
+            requestJSONRawObject(
+                type,
+                context: context,
+                progressBlock: nil
+            ) { json in
+                continuation.resume(returning: json)
+            } exceptionHandle: { error in
+                continuation.resume(throwing: error)
+            }
+        }
+    }
+    
+    // 返回LXResponseContainer,需要单独处理error
+    func requestJSONModelThrowingAsync<R: LXMoyaTargetType>(
+        _ type: R,
+        context: RequestContext = .init()
+    ) async throws -> LXResponseContainer<T> {
+        try await withCheckedThrowingContinuation { continuation in
+            requestJSONModel(
+                type,
+                context: context,
+                progressBlock: nil
+            ) { result in
+                switch result {
+                case .success(let container):
+                    continuation.resume(returning: container)
+                case .failure(let error):
+                    continuation.resume(throwing: error)
+                }
+            }
+        }
+    }
+
+    // 返回LXResult
+    func requestJSONModelAsync<R: LXMoyaTargetType>(
+        _ type: R,
+        context: RequestContext = .init()
+    ) async -> LXResult<T> {
+        return await withCheckedContinuation { continuation in
+            requestJSONModel(
+                type,
+                context: context,
+                progressBlock: nil
+            ) { result in
+                continuation.resume(returning: result)
+            }
+        }
     }
 }
