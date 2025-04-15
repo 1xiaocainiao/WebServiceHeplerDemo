@@ -19,7 +19,8 @@ class ViewController: UIViewController {
         
         
 //        requestBaiduAsync()
-        requestThrowingAsync()
+//        requestThrowingAsync()
+        requestCancelTaskAsync()
         
 //        testNormalRequest()
         
@@ -142,5 +143,17 @@ extension ViewController {
                 printl(message: "出错了")
             }
         }
+    }
+    
+    func requestCancelTaskAsync() {
+        let task = Task {
+            do {
+                let result = try await LXWebServiceHelper<UserInfo>().requestJSONRawObjectCancellableAsync(TestRequestType.baidu)
+                printl(message: result)
+            } catch {
+                printl(message: "出错了")
+            }
+        }
+        task.cancel()
     }
 }

@@ -13,13 +13,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-        if let logs = LogManager.readLogs() {
-            printl(message: "===== 启动日志输出开始 =====")
-            printl(message: logs)
-            printl(message: "===== 启动日志输出结束 =====")
-        } else {
-            printl(message: "没有找到日志文件")
-        }
+//        if let logs = LogManager.readLogs() {
+//            printl(message: "===== 启动日志输出开始 =====")
+//            printl(message: logs)
+//            printl(message: "===== 启动日志输出结束 =====")
+//        } else {
+//            printl(message: "没有找到日志文件")
+//        }
         
         // Override point for customization after application launch.
         return true

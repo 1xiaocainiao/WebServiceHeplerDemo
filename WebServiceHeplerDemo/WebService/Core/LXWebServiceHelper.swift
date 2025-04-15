@@ -211,3 +211,40 @@ extension LXWebServiceHelper {
         }
     }
 }
+
+// MARK: - 支持 cancellable, 未测试，未使用
+extension LXWebServiceHelper {
+    func requestJSONRawObjectCancellableAsync<R: LXMoyaTargetType>(
+        _ type: R,
+        context: RequestContext = .init()
+    ) async throws -> Any {
+        let ctx = ContextCancellable()
+
+        return try await withTaskCancellationHandler {
+            try await withCheckedThrowingContinuation { continuation in
+                // 启动请求
+                ctx.cancellable = requestJSONRawObject(
+                    type,
+                    context: context,
+                    progressBlock: nil
+                ) { json in
+                    continuation.resume(returning: json)
+                } exceptionHandle: { error in
+                    continuation.resume(throwing: error)
+                }
+
+                // 检查是否在启动前已被取消
+                if _Concurrency.Task.isCancelled { // ✅ 正确用法：通过当前 Task 的上下文检查
+                    ctx.cancellable?.cancel()
+                }
+            }
+        } onCancel: {
+            ctx.cancellable?.cancel()
+        }
+    }
+}
+
+// 使用类包装 Cancellable 和状态
+final class ContextCancellable {
+    var cancellable: Moya.Cancellable?
+}
