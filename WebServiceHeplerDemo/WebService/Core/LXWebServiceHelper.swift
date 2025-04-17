@@ -108,12 +108,6 @@ open class LXWebServiceHelper<T> where T: Codable {
                                                 progressBlock: ProgressBlock?,
                                                 completionHandle: @escaping JSONObjectHandle,
                                                         exceptionHandle: @escaping (LXError) -> Void) -> Moya.Cancellable? {
-        if !NetworkMonitor.default.isConnected {
-            DispatchQueue.mainAsync {
-                exceptionHandle(LXError.networkConnectFailed)
-            }
-            return nil
-        }
         let provider = createProvider(type: type)
         let cancelable = provider.request(type, callbackQueue: nil, progress: progressBlock) { result in
             switch result {

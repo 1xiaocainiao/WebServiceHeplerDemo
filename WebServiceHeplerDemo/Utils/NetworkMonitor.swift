@@ -61,3 +61,16 @@ class NetworkMonitor {
 //        }
     }
 }
+
+extension NetworkMonitor {
+    static func showToastWhenNoNetwork(show: Bool = true) -> Bool {
+        if !isConnected, show {
+//            SVProgressHUD.showText(status: LXLocalizedString("net_connect_error"))
+        }
+        return !isConnected
+    }
+    
+    static var isConnected: Bool {
+        return NetworkMonitor.default.isConnected
+    }
+}
