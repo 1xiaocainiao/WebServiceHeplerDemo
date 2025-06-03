@@ -7,6 +7,7 @@
 
 import Foundation
 import Moya
+import Alamofire
 
 public enum LXError: Error, Equatable {
     // json 解析失败
@@ -88,29 +89,59 @@ extension MoyaError {
                 .objectMapping:
             return LXError.jsonSerializationFailed(message: "数据解析失败")
         case .underlying(let error, _):
-            let nsError = error as NSError
-            if nsError.domain == NSURLErrorDomain {
-                switch nsError.code {
-                case NSURLErrorNotConnectedToInternet:
-                    printl(message: "网络不可用，请检查连接")
-                    return LXError.networkConnectFailed
-                case NSURLErrorTimedOut:
-                    printl(message: "请求超时")
-                    return LXError.networkConnectTimeOut
-                case NSURLErrorCannotConnectToHost:
-                    printl(message: "无法连接到服务器")
-                    return LXError.serverConnectionFailed
-                case NSURLErrorSecureConnectionFailed:
-                    printl(message: "安全连接失败")
-                    return LXError.networkConnectFailed
-                case NSURLErrorCancelled:
-                    printl(message: "取消请求")
-                    return LXError.cancelledRequest
-                default:
-                    return .exception(message: "网络错误: \(nsError.localizedDescription)")
+            return handleMoyaUnderlyingNetworkError(error)
+        default:
+            return .exception(message: self.localizedDescription)
+        }
+    }
+    
+    func handleMoyaUnderlyingNetworkError(_ error: Error) -> LXError {
+        // 优先处理 Alamofire 特定错误
+        if let afError = error as? AFError {
+            switch afError {
+            case .sessionTaskFailed(let underlying):
+                if let urlError = underlying as? URLError {
+                    return handleURLError(urlError)
+                } else {
+                    return .exception(message: self.localizedDescription)
                 }
+            case .explicitlyCancelled:
+                printl(message: "取消请求")
+                return LXError.cancelledRequest
+            default:
+                printl(message: "Alamofire 错误: \(afError)")
+                return .exception(message: self.localizedDescription)
             }
-            return .exception(message: "未知错误: \(error.localizedDescription)")
+        }
+        
+        // 处理系统 URL 错误
+        if let urlError = error as? URLError {
+            return handleURLError(urlError)
+        }
+        
+        printl(message: "未知错误类型: \(self.localizedDescription)")
+        return .exception(message: self.localizedDescription)
+    }
+    
+    private func handleURLError(_ error: URLError) -> LXError {
+        switch error.code {
+        case .cancelled:
+            printl(message: "取消请求")
+            return LXError.cancelledRequest
+        case .timedOut:
+            printl(message: "请求超时")
+            return LXError.networkConnectTimeOut
+        case .notConnectedToInternet:
+            printl(message: "网络不可用，请检查连接")
+            return LXError.networkConnectFailed
+        case .networkConnectionLost,
+                .cannotFindHost,
+                .cannotConnectToHost:
+            printl(message: "无法连接到服务器")
+            return LXError.serverConnectionFailed
+        case .secureConnectionFailed:
+            printl(message: "安全连接失败")
+            return LXError.networkConnectFailed
         default:
             return .exception(message: self.localizedDescription)
         }
