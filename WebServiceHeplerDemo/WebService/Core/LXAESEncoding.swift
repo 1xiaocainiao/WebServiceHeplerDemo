@@ -10,7 +10,7 @@ let kAESIV = "ABDF4EB14FFAC1C1"
 func paramsEncrypt(params: [String: Any]) -> Data? {
     do {
         let jsonData = try JSONSerialization.data(withJSONObject: params,
-                                                  options: JSONSerialization.WritingOptions.prettyPrinted)
+                                                  options: [])
         
         guard let encryptData = AES.default.encrypt(data: jsonData) else {
             return nil
