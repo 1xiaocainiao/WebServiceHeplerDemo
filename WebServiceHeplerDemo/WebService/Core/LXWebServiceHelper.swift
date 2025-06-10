@@ -119,7 +119,7 @@ open class LXWebServiceHelper<T> where T: Codable {
                         #if DEBUG
                         if let jsonData = try? JSONSerialization.data(withJSONObject: jsonObject, options: .prettyPrinted),
                            let jsonString = String(data: jsonData, encoding: .utf8) {
-                            printl(message: "response jsonString: \n \(jsonString)")
+                            printl(message: "request path: \(type.path) \nresponse jsonString: \n \(jsonString)")
                         }
                         #else
                         #endif
