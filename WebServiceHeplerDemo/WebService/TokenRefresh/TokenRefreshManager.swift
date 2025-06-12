@@ -233,7 +233,8 @@ class TokenRefreshManager {
     }
     
     private func isTokenValid() -> Bool {
-        return false
+        // 第一次安装时默认ture,别改
+        return true
         
 //        if let inValid = LoginResultModel.currentInfo()?.tokenInValid {
 //            return !inValid
