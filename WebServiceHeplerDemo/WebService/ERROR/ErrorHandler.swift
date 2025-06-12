@@ -14,6 +14,11 @@ protocol ErrorHandler: AnyObject {
 
 final class DefaultErrorHandler: ErrorHandler {
     static func handle(error: LXError, context: RequestContext) {
+        if let target = context.target {
+            printl(message: "error request url: \(target.baseURL)")
+            printl(message: "error request path: \(target.path)")
+        }
+        
         if checkForceLogout(error: error) {
             return
         }

@@ -15,12 +15,12 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-//        requestBaidu()
+        requestBaidu()
         
         
 //        requestBaiduAsync()
 //        requestThrowingAsync()
-        requestCancelTaskAsync()
+//        requestCancelTaskAsync()
         
 //        testNormalRequest()
         
@@ -35,11 +35,12 @@ class ViewController: UIViewController {
     }
     
     func requestBaidu() {
-        let context = RequestContext(options: [.auto]) { error in
+        let api = TestRequestType.baidu
+        let context = RequestContext(target: api, options: [.auto]) { error in
             printl(message: "自定义方法")
         }
         // 不传context默认是toast
-        LXWebServiceHelper<UserInfo>().requestJSONModel(TestRequestType.baidu, context: context, progressBlock: nil) { result in
+        LXWebServiceHelper<UserInfo>().requestJSONModel(api, context: context, progressBlock: nil) { result in
             switch result {
             case .success(let container):
                 printl(message: container.value?.trueName)

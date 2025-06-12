@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import Moya
 
 struct ErrorHandlingOptions: OptionSet {
     let rawValue: Int
@@ -20,13 +21,16 @@ struct ErrorHandlingOptions: OptionSet {
 }
 
 struct RequestContext {
+    let target: LXMoyaTargetType?
     var handlingOptions: ErrorHandlingOptions
     var sourcePage: String?
     var customHandler: ((LXError) -> Void)?
     
-    init(options: ErrorHandlingOptions = .default,
+    init(target: LXMoyaTargetType? = nil,
+        options: ErrorHandlingOptions = .default,
          source: String? = nil,
          handler: ((LXError) -> Void)? = nil) {
+        self.target = target
         self.handlingOptions = options
         self.sourcePage = source
         self.customHandler = handler
