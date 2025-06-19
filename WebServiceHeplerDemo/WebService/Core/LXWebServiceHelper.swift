@@ -64,14 +64,7 @@ open class LXWebServiceHelper<T> where T: Codable {
             plugins.append(crePlugin!)
         }
         
-//        let aesPlugin = LXHandleRequestPlugin()
-//        plugins.append(aesPlugin)
-        
-#if DEBUG
-        plugins.append(HighPrecisionTimingPlugin())
-        plugins.append(NetworkLoggerPlugin(configuration: .init(logOptions: [.requestHeaders, .requestBody,/* .successResponseBody*/])))
-#else
-#endif
+        plugins.append(contentsOf: LXMoyaPlugins.defaultMoyaPlugins)
         
         // 超时设置
 //        let requestTimeoutClosure = { (endpoint: Endpoint, done: @escaping MoyaProvider<R>.RequestResultClosure) in
