@@ -37,7 +37,7 @@ class ViewController: UIViewController {
     
     func requestBaidu() {
         let api = TestRequestType.baidu
-        let context = RequestContext(target: api, options: [.toast])
+        let context = RequestContext(target: api, option: .toast)
         // 不传context默认是toast
         LXWebServiceHelper<UserInfo>().requestJSONModel(api, context: context, progressBlock: nil) { result in
             switch result {
@@ -58,7 +58,7 @@ class ViewController: UIViewController {
         let retryAction = UIAlertAction(title: "重试", style: .default) { action in
             printl(message: "重试")
         }
-        let context = RequestContext(target: api, options: [.alertWithAction], alertActions: [cancelAction, retryAction])
+        let context = RequestContext(target: api, option: .alertWithAction, alertActions: [cancelAction, retryAction])
         // 不传context默认是toast
         LXWebServiceHelper<UserInfo>().requestJSONModel(api, context: context, progressBlock: nil) { result in
             switch result {

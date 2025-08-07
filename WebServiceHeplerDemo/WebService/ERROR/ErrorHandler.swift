@@ -23,22 +23,22 @@ final class DefaultErrorHandler: ErrorHandler {
             return
         }
         
-        let options = context.handlingOptions
+        let options = context.handlingOption
         
-        if options.contains(.manual) ||
-            options.contains(.silent) {
+        if options == .manual ||
+            options == .silent {
             printl(message: "手动处理错误或者静默")
             return
         }
         
         let message = error.message ?? "Unknown"
         
-        if options.contains(.toast) {
+        if options == .toast {
             showToast(message: message)
         }
         
-        if options.contains(.defaultAlert) ||
-            options.contains(.alertWithAction) {
+        if options == .defaultAlert ||
+            options == .alertWithAction {
             showAlert(message: message, actions: context.alertActions)
         }
     }
