@@ -15,7 +15,8 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        requestBaidu()
+//        requestBaidu()
+        requestBaiduAlertError()
         
         
 //        requestBaiduAsync()
@@ -36,9 +37,28 @@ class ViewController: UIViewController {
     
     func requestBaidu() {
         let api = TestRequestType.baidu
-        let context = RequestContext(target: api, options: [.auto]) { error in
-            printl(message: "自定义方法")
+        let context = RequestContext(target: api, options: [.toast])
+        // 不传context默认是toast
+        LXWebServiceHelper<UserInfo>().requestJSONModel(api, context: context, progressBlock: nil) { result in
+            switch result {
+            case .success(let container):
+                printl(message: container.value?.trueName)
+            case .failure(let error):
+                printl(message: "出错了")
+            }
         }
+    }
+    
+    func requestBaiduAlertError() {
+        let api = TestRequestType.baidu
+        
+        let cancelAction = UIAlertAction(title: "取消", style: .cancel) { action in
+            printl(message: "取消")
+        }
+        let retryAction = UIAlertAction(title: "重试", style: .default) { action in
+            printl(message: "重试")
+        }
+        let context = RequestContext(target: api, options: [.alertWithAction], alertActions: [cancelAction, retryAction])
         // 不传context默认是toast
         LXWebServiceHelper<UserInfo>().requestJSONModel(api, context: context, progressBlock: nil) { result in
             switch result {

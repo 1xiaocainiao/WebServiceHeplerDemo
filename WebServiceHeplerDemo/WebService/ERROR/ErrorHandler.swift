@@ -23,29 +23,47 @@ final class DefaultErrorHandler: ErrorHandler {
             return
         }
         
-        guard !context.handlingOptions.contains(.manual) else { return }
-        let message = error.message ?? "Unknown"
         let options = context.handlingOptions
         
-        // 优先级处理链
-        if let customHandler = context.customHandler {
-            // 1. 优先使用调用方提供的闭包
-            customHandler(error)
-        } else if options.contains(.forceAlert) {
-            // 2. 强制 Alert 模式
-            showAlert(message: message)
-        } else if options.contains(.forceToast) {
-            // 3. 强制 Toast 模式
+        if options.contains(.manual) ||
+            options.contains(.silent) {
+            printl(message: "手动处理错误或者静默")
+            return
+        }
+        
+        let message = error.message ?? "Unknown"
+        
+        if options.contains(.toast) {
             showToast(message: message)
-        } else if context.handlingOptions.contains(.silent) {
-            printl(message: "不需要处理，只需要log")
-        } else {
-            showToast(message: message)
+        }
+        
+        if options.contains(.defaultAlert) ||
+            options.contains(.alertWithAction) {
+            showAlert(message: message, actions: context.alertActions)
         }
     }
     
-    static fileprivate func showAlert(message: String) {
-        printl(message: "显示系统弹窗: \(message)")
+    static fileprivate func showAlert(message: String, actions: [UIAlertAction]? = nil) {
+        let alert = UIAlertController(title: nil, message: message, preferredStyle: .alert)
+        
+        if let actions = actions, actions.isNotEmpty {
+            // 有点击事件回调
+            printl(message: "显示 Alert 多个action 提示: \(message)")
+            
+            for action in actions {
+                alert.addAction(action)
+            }
+        } else {
+            // 无点击事件回调
+            printl(message: "显示 默认 Alert 提示: \(message)")
+            
+            let cancelAction = UIAlertAction(title: "OK", style: .cancel, handler: nil)
+            
+            let alert = UIAlertController(title: "title", message: "message", preferredStyle: .alert)
+            alert.addAction(cancelAction)
+        }
+        let root = UIApplication.shared.keyWindow?.rootViewController
+        root?.present(alert, animated: true)
     }
     
     static fileprivate func showToast(message: String) {
@@ -61,5 +79,13 @@ final class DefaultErrorHandler: ErrorHandler {
         default:
             return false
         }
+    }
+    
+    static func checkShowError(_ error: Error?) {
+        guard let error = error as? LXError else {
+            SVProgressHUD.showError(withStatus: "UnknownError")
+            return
+        }
+        SVProgressHUD.showError(withStatus: error.message)
     }
 }

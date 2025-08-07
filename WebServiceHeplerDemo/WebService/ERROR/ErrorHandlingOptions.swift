@@ -10,29 +10,37 @@ import Moya
 
 struct ErrorHandlingOptions: OptionSet {
     let rawValue: Int
-    // 目前auto 默认处理的toast
-    static let auto = ErrorHandlingOptions(rawValue: 1 << 0)
-    static let manual = ErrorHandlingOptions(rawValue: 1 << 1)
-    static let forceToast = ErrorHandlingOptions(rawValue: 1 << 2)
-    static let forceAlert = ErrorHandlingOptions(rawValue: 1 << 3)
+    
+    static let toast = ErrorHandlingOptions(rawValue: 1 << 0)
+    /// 默认一个按钮的alert
+    static let defaultAlert = ErrorHandlingOptions(rawValue: 1 << 1)
+    /// 自定义事件的alert
+    static let alertWithAction = ErrorHandlingOptions(rawValue: 1 << 2)
+    /// 自己在请求回调处理
+    static let manual = ErrorHandlingOptions(rawValue: 1 << 3)
+    /// 静默
     static let silent = ErrorHandlingOptions(rawValue: 1 << 4)
     
-    static let `default`: ErrorHandlingOptions = [.auto]
+    static let `default`: ErrorHandlingOptions = [.toast]
 }
 
 struct RequestContext {
     let target: LXMoyaTargetType?
     var handlingOptions: ErrorHandlingOptions
     var sourcePage: String?
-    var customHandler: ((LXError) -> Void)?
+    /// 自己处理alert点击
+    var alertActions: [UIAlertAction]?
     
     init(target: LXMoyaTargetType? = nil,
         options: ErrorHandlingOptions = .default,
          source: String? = nil,
-         handler: ((LXError) -> Void)? = nil) {
+         alertActions: [UIAlertAction]? = nil) {
         self.target = target
         self.handlingOptions = options
         self.sourcePage = source
-        self.customHandler = handler
+        self.alertActions = alertActions
+        if options == .defaultAlert {
+            self.alertActions = nil
+        }
     }
 }
