@@ -18,15 +18,37 @@ enum ResutType {
     case array
 }
 
+enum ValueType<T: Codable> {
+    case object(T)
+    case array([T])
+    
+    var values: [T]? {
+        switch self {
+        case .object(_):
+            return nil
+        case .array(let array):
+            return array
+        }
+    }
+    
+    var value: T? {
+        switch self {
+        case .object(let t):
+            return t
+        case .array(_):
+            return nil
+        }
+    }
+}
+
 /// 需要根据实际情况修改，这个只是demo请求使用
 struct LXResponseContainer<T: Codable> {
     let rawObject: Any?
     let code: Int?
     let message: String?
     
-    let originData: Any?
-    let value: T?
-    let values: [T]?
+    let rawData: Any?
+    let valueType: ValueType<T>?
     
     let type: ResutType
     
@@ -34,17 +56,15 @@ struct LXResponseContainer<T: Codable> {
          code: Int?,
          message: String?,
          type: ResutType,
-         originData: Any? = nil,
-         value: T? = nil,
-         values: [T]? = nil) {
+         rawData: Any? = nil,
+         valueType: ValueType<T>? = nil) {
         self.rawObject = rawObject
         self.code = code
         self.message = message
         self.type = type
         
-        self.originData = originData
-        self.value = value
-        self.values = values
+        self.rawData = rawData
+        self.valueType = valueType
     }
 }
 
@@ -85,7 +105,7 @@ func parseResponseToResult<T: Codable>(responseObject: Any?,
                                                 code: statusCode,
                                                 message: message,
                                                 type: type,
-                                               originData: jsonValue))
+                                                rawData: jsonValue))
         case .model:
             if let jsonDic = jsonValue as? [String: Any] {
                 let data = jsonDic.toData()
@@ -95,8 +115,8 @@ func parseResponseToResult<T: Codable>(responseObject: Any?,
                                                         code: statusCode,
                                                         message: message,
                                                         type: type,
-                                                       originData: jsonValue,
-                                                       value: model))
+                                                        rawData: jsonValue,
+                                                        valueType: .object(model)))
                 } catch let error {
                     if let err = error as? LXError {
                         return .failure(err)
@@ -127,8 +147,8 @@ func parseResponseToResult<T: Codable>(responseObject: Any?,
                                                     code: statusCode,
                                                     message: message,
                                                     type: type,
-                                                   originData: jsonValue,
-                                                   values: resultValues))
+                                                    rawData: jsonValue,
+                                                    valueType: .array(resultValues)))
             } else {
                 return .failure(LXError.dataContentTransformToModelFailed)
             }

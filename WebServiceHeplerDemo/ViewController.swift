@@ -189,7 +189,7 @@ extension ViewController {
         LXWebServiceHelper<GlobalModel>().requestJSONModel(UniversalApi.globalConfig) { result in
             switch result {
             case .success(let container):
-                printl(message: "model 结果 --- \(container.value?.h5_host ?? "")")
+                printl(message: "model 结果 --- \(container.valueType?.value?.helper_user_id ?? 0)")
             case .failure(let error):
                 printl(message: error.localizedDescription)
             }
@@ -200,7 +200,7 @@ extension ViewController {
         LXWebServiceHelper<LXEmptyDecodable>().requestJSONRawObject(UniversalApi.globalConfig) { result in
             switch result {
             case .success(let container):
-                printl(message: "元数据结果 -- \(String(describing: container.originData))")
+                printl(message: "元数据结果 -- \(String(describing: container.rawData))")
             case .failure(let error):
                 printl(message: error.localizedDescription)
             }
