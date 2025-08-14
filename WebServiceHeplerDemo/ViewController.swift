@@ -15,8 +15,12 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        requestConfig()
+        
+//        requestOrigin()
+        
 //        requestBaidu()
-        requestBaiduAlertError()
+//        requestBaiduAlertError()
         
         
 //        requestBaiduAsync()
@@ -35,52 +39,52 @@ class ViewController: UIViewController {
         // Do any additional setup after loading the view.
     }
     
-    func requestBaidu() {
-        let api = TestRequestType.baidu
-        let context = RequestContext(target: api, option: .toast)
-        // 不传context默认是toast
-        LXWebServiceHelper<UserInfo>().requestJSONModel(api, context: context, progressBlock: nil) { result in
-            switch result {
-            case .success(let container):
-                printl(message: container.value?.trueName)
-            case .failure(let error):
-                printl(message: "出错了")
-            }
-        }
-    }
-    
-    func requestBaiduAlertError() {
-        let api = TestRequestType.baidu
-        
-        let cancelAction = UIAlertAction(title: "取消", style: .cancel) { action in
-            printl(message: "取消")
-        }
-        let retryAction = UIAlertAction(title: "重试", style: .default) { action in
-            printl(message: "重试")
-        }
-        let context = RequestContext(target: api, option: .alertWithAction, alertActions: [cancelAction, retryAction])
-        // 不传context默认是toast
-        LXWebServiceHelper<UserInfo>().requestJSONModel(api, context: context, progressBlock: nil) { result in
-            switch result {
-            case .success(let container):
-                printl(message: container.value?.trueName)
-            case .failure(let error):
-                printl(message: "出错了")
-            }
-        }
-    }
-    
-    func testNormalRequest() {
-        let helper = LXWebServiceHelper<CityInfo>()
-        helper.requestJSONModel(TestRequestType.cityTest, progressBlock: nil) { result in
-            switch result {
-            case .success(let container):
-                printl(message: container.value?.city)
-            case .failure(let error):
-                printl(message: "出错了")
-            }
-        }
-    }
+//    func requestBaidu() {
+//        let api = TestRequestType.baidu
+//        let context = RequestContext(target: api, option: .toast)
+//        // 不传context默认是toast
+//        LXWebServiceHelper<UserInfo>().requestJSONModel(api, context: context, progressBlock: nil) { result in
+//            switch result {
+//            case .success(let container):
+//                printl(message: container.value?.trueName)
+//            case .failure(let error):
+//                printl(message: "出错了")
+//            }
+//        }
+//    }
+//    
+//    func requestBaiduAlertError() {
+//        let api = TestRequestType.baidu
+//        
+//        let cancelAction = UIAlertAction(title: "取消", style: .cancel) { action in
+//            printl(message: "取消")
+//        }
+//        let retryAction = UIAlertAction(title: "重试", style: .default) { action in
+//            printl(message: "重试")
+//        }
+//        let context = RequestContext(target: api, option: .alertWithAction, alertActions: [cancelAction, retryAction])
+//        // 不传context默认是toast
+//        LXWebServiceHelper<UserInfo>().requestJSONModel(api, context: context, progressBlock: nil) { result in
+//            switch result {
+//            case .success(let container):
+//                printl(message: container.value?.trueName)
+//            case .failure(let error):
+//                printl(message: "出错了")
+//            }
+//        }
+//    }
+//    
+//    func testNormalRequest() {
+//        let helper = LXWebServiceHelper<CityInfo>()
+//        helper.requestJSONModel(TestRequestType.cityTest, progressBlock: nil) { result in
+//            switch result {
+//            case .success(let container):
+//                printl(message: container.value?.city)
+//            case .failure(let error):
+//                printl(message: "出错了")
+//            }
+//        }
+//    }
 
 //    func testPublisherRequest() {
 //        let publisher = LXWebServiceHelper<CityInfo>().requestJsonModelPublisher(TestRequestType.cityTest, progressBlock: nil)
@@ -143,38 +147,63 @@ class ViewController: UIViewController {
 
 // MARK: - async await
 extension ViewController {
-    func requestBaiduAsync() {
-        Task {
-            let result = await LXWebServiceHelper<UserInfo>().requestJSONModelAsync(TestRequestType.baidu)
+//    func requestBaiduAsync() {
+//        Task {
+//            let result = await LXWebServiceHelper<UserInfo>().requestJSONModelAsync(TestRequestType.baidu)
+//            switch result {
+//            case .success(let container):
+//                printl(message: container.value?.trueName)
+//            case .failure(let error):
+//                printl(message: "出错了")
+//            }
+//        }
+//    }
+//    
+//    func requestThrowingAsync() {
+//        Task {
+//            do {
+//                let result = try await LXWebServiceHelper<UserInfo>().requestJSONModelThrowingAsync(TestRequestType.baidu)
+//                printl(message: result.value?.trueName)
+//            } catch {
+//                printl(message: "出错了")
+//            }
+//        }
+//    }
+//    
+//    func requestCancelTaskAsync() {
+//        let task = Task {
+//            do {
+//                let result = try await LXWebServiceHelper<UserInfo>().requestJSONRawObjectCancellableAsync(TestRequestType.baidu)
+//                printl(message: result)
+//            } catch {
+//                printl(message: "出错了")
+//            }
+//        }
+//        task.cancel()
+//    }
+}
+
+// MARK: - request cache
+extension ViewController {
+    func requestConfig() {
+        LXWebServiceHelper<GlobalModel>().requestJSONModel(UniversalApi.globalConfig) { result in
             switch result {
             case .success(let container):
-                printl(message: container.value?.trueName)
+                printl(message: "model 结果 --- \(container.value?.h5_host ?? "")")
             case .failure(let error):
-                printl(message: "出错了")
+                printl(message: error.localizedDescription)
             }
         }
     }
     
-    func requestThrowingAsync() {
-        Task {
-            do {
-                let result = try await LXWebServiceHelper<UserInfo>().requestJSONModelThrowingAsync(TestRequestType.baidu)
-                printl(message: result.value?.trueName)
-            } catch {
-                printl(message: "出错了")
+    func requestOrigin() {
+        LXWebServiceHelper<LXEmptyDecodable>().requestJSONRawObject(UniversalApi.globalConfig) { result in
+            switch result {
+            case .success(let container):
+                printl(message: "元数据结果 -- \(String(describing: container.originData))")
+            case .failure(let error):
+                printl(message: error.localizedDescription)
             }
         }
-    }
-    
-    func requestCancelTaskAsync() {
-        let task = Task {
-            do {
-                let result = try await LXWebServiceHelper<UserInfo>().requestJSONRawObjectCancellableAsync(TestRequestType.baidu)
-                printl(message: result)
-            } catch {
-                printl(message: "出错了")
-            }
-        }
-        task.cancel()
     }
 }

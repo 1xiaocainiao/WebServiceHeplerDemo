@@ -12,20 +12,44 @@ public struct ResponseCode {
     static let successResponseStatusCode: Int = 200
 }
 
+enum ResutType {
+    case origin
+    case model
+    case array
+}
+
 /// 需要根据实际情况修改，这个只是demo请求使用
 struct LXResponseContainer<T: Codable> {
     let rawObject: Any?
     let code: Int?
     let message: String?
+    
+    let originData: Any?
     let value: T?
+    let values: [T]?
+    
+    let type: ResutType
+    
+    init(rawObject: Any?,
+         code: Int?,
+         message: String?,
+         type: ResutType,
+         originData: Any? = nil,
+         value: T? = nil,
+         values: [T]? = nil) {
+        self.rawObject = rawObject
+        self.code = code
+        self.message = message
+        self.type = type
+        
+        self.originData = originData
+        self.value = value
+        self.values = values
+    }
 }
 
 func parseResponseToResult<T: Codable>(responseObject: Any?,
-                                       error: LXError?) -> LXResult<T> {
-    /// 有错误就直接返回
-    if let error = error {
-        return .failure(error)
-    }
+                                       type: ResutType) -> LXResult<T> {
     /// 检查数据完整性，根据自己项目实际情况进行修改
     guard let jsonObject = responseObject as? [String: Any],
           let message = jsonObject[ServerKey.message.rawValue] as? String else {
@@ -55,42 +79,87 @@ func parseResponseToResult<T: Codable>(responseObject: Any?,
 //                                                value: [] as? T))
 //        }
         
-        // 如果data就是结果，直接赋值
-        if let dataObject = jsonValue as? T {
-            return .success(LXResponseContainer(rawObject: jsonValue,
+        switch type {
+        case .origin:
+            return .success(LXResponseContainer(rawObject: jsonObject,
                                                 code: statusCode,
                                                 message: message,
-                                                value: dataObject))
-        }
-        
-        guard let jsonData = try? JSONSerialization.data(withJSONObject: jsonValue, options: .prettyPrinted) else {
-            return .failure(LXError.jsonSerializationFailed(message: "json data 解析失败"))
-        }
-        
-        do {
-            let model = try JSONDecoder().decode(T.self, from: jsonData)
-            return .success(LXResponseContainer(
-                rawObject: jsonValue,
-                code: statusCode,
-                message: message,
-                value: model))
-        } catch DecodingError.keyNotFound(let key, let context) {
-            printl(message: "keyNotFound: \(key) is not found in JSON: \(context.debugDescription)")
-            return .failure(LXError.dataContentTransformToModelFailed)
-        } catch DecodingError.valueNotFound(let type, let context) {
-            printl(message: "valueNotFound: \(type) is not found in JSON: \(context.debugDescription)")
-            return .failure(LXError.dataContentTransformToModelFailed)
-        } catch DecodingError.typeMismatch(let type, let context) {
-            printl(message: "typeMismatch: \(type) is mismatch in JSON: \(context.debugDescription) \(context.codingPath)")
-            return .failure(LXError.dataContentTransformToModelFailed)
-        } catch DecodingError.dataCorrupted(let context) {
-            printl(message: "dataCorrupted: \(context.debugDescription)")
-            return .failure(LXError.dataContentTransformToModelFailed)
-        } catch let error {
-            printl(message: "error: \(error.localizedDescription)")
-            return .failure(LXError.exception(message: error.localizedDescription))
+                                                type: type,
+                                               originData: jsonValue))
+        case .model:
+            if let jsonDic = jsonValue as? [String: Any] {
+                let data = jsonDic.toData()
+                do {
+                    let model: T = try decodeToModel(responseData: data)
+                    return .success(LXResponseContainer(rawObject: jsonObject,
+                                                        code: statusCode,
+                                                        message: message,
+                                                        type: type,
+                                                       originData: jsonValue,
+                                                       value: model))
+                } catch let error {
+                    if let err = error as? LXError {
+                        return .failure(err)
+                    } else {
+                        return .failure(LXError.exception(message: error.localizedDescription))
+                    }
+                }
+            } else {
+                return .failure(LXError.dataContentTransformToModelFailed)
+            }
+        case .array:
+            if let jsonArray = jsonValue as? Array<[String: Any]> {
+                var resultValues: [T] = []
+                for jsonDic in jsonArray {
+                    let data = jsonDic.toData()
+                    do {
+                        let model: T = try decodeToModel(responseData: data)
+                        resultValues.append(model)
+                    } catch let error {
+                        if let err = error as? LXError {
+                            return .failure(err)
+                        } else {
+                            return .failure(LXError.exception(message: error.localizedDescription))
+                        }
+                    }
+                }
+                return .success(LXResponseContainer(rawObject: jsonObject,
+                                                    code: statusCode,
+                                                    message: message,
+                                                    type: type,
+                                                   originData: jsonValue,
+                                                   values: resultValues))
+            } else {
+                return .failure(LXError.dataContentTransformToModelFailed)
+            }
         }
     } else {
         return .failure(LXError.serverResponseError(message: message, code: statusCode))
+    }
+}
+
+func decodeToModel<T: Codable>(responseData: Data?) throws -> T {
+    guard let data = responseData else {
+        throw LXError.missDataContent
+    }
+    
+    do {
+        let model = try JSONDecoder().decode(T.self, from: data)
+        return model
+    } catch DecodingError.keyNotFound(let key, let context) {
+        printl(message: "keyNotFound: \(key) is not found in JSON: \(context.debugDescription)")
+        throw LXError.dataContentTransformToModelFailed
+    } catch DecodingError.valueNotFound(let type, let context) {
+        printl(message: "valueNotFound: \(type) is not found in JSON: \(context.debugDescription)")
+        throw LXError.dataContentTransformToModelFailed
+    } catch DecodingError.typeMismatch(let type, let context) {
+        printl(message: "typeMismatch: \(type) is mismatch in JSON: \(context.debugDescription) \(context.codingPath)")
+        throw LXError.dataContentTransformToModelFailed
+    } catch DecodingError.dataCorrupted(let context) {
+        printl(message: "dataCorrupted: \(context.debugDescription)")
+        throw LXError.dataContentTransformToModelFailed
+    } catch let error {
+        printl(message: "error: \(error.localizedDescription)")
+        throw LXError.exception(message: error.localizedDescription)
     }
 }

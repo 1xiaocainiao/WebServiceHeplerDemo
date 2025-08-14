@@ -18,9 +18,10 @@ class LXHandleRequestPlugin: PluginType {
             
             request.httpBody = encryptData
             
-            request.setValue(kPublicKey, forHTTPHeaderField: "APPID")
+//            request.setValue(kPublicKey, forHTTPHeaderField: "APPID")
         case .uploadMultipart(_): //上传需要特殊处理，比如同时上传图片和文字时，文字参数是单独加密包含在MultipartFormData的，详情请看TestPolicyApi中含有上传部分
-            request.setValue(kPublicKey, forHTTPHeaderField: "APPID")
+//            request.setValue(kPublicKey, forHTTPHeaderField: "APPID")
+            break
         default:
             return request
         }

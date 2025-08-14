@@ -8,7 +8,7 @@
 import Foundation
 import Moya
 
-open class LXWebServiceHelper<T> where T: Codable {
+open class LXWebServiceHelper<T> where T: DatabaseTable {
     typealias JSONObjectHandle = (Any) -> Void
     typealias ExceptionHandle = (LXError) -> Void
     typealias ResultContainerHandle = (LXResult<T>) -> Void
@@ -18,11 +18,27 @@ open class LXWebServiceHelper<T> where T: Codable {
                                                context: RequestContext = .init(),
                                                progressBlock: ProgressBlock? = nil,
                                                completionHandle: @escaping ResultContainerHandle) -> Moya.Cancellable? {
+        let dbManager = DatabaseManager(userId: nil)
+        if type.loadStatus().isRefresh,
+           type.loadStatus().needLoadDBWhenRefreshing {
+            if let model: T = try? dbManager.query().first {
+                let container = LXResponseContainer(rawObject: nil,
+                                                    code: nil,
+                                                    message: nil,
+                                                    type: .model,
+                                                    value: model)
+                completionHandle(.success(container))
+            }
+        }
         return requestJSONObject(type, context: context, progressBlock: progressBlock) { [weak self] result in
-            let result: LXResult<T> = parseResponseToResult(responseObject: result,
-                                                                   error: nil)
+            let result: LXResult<T> = parseResponseToResult(responseObject: result, type: .model)
             switch result {
-            case .success( _):
+            case .success(let container):
+                if type.loadStatus().needCache {
+                    if let value = container.value {
+                        try? dbManager.insertOrUpdate(object: value, clear: type.loadStatus().clearDataWhenCache)
+                    }
+                }
                 break
             case .failure(let error):
                 self?.handleError(error, context: context)
@@ -30,7 +46,64 @@ open class LXWebServiceHelper<T> where T: Codable {
             completionHandle(result)
         } exceptionHandle: { [weak self] error in
             let result: LXResult<T> = parseResponseToResult(responseObject: nil,
-                                                                   error: error)
+                                                            type: .model)
+            self?.handleError(error, context: context)
+            completionHandle(result)
+        }
+    }
+    
+    @discardableResult
+    func requestJSONModelArray<R: LXMoyaTargetType>(_ type: R,
+                                               context: RequestContext = .init(),
+                                               progressBlock: ProgressBlock? = nil,
+                                               completionHandle: @escaping ResultContainerHandle) -> Moya.Cancellable? {
+        let dbManager = DatabaseManager(userId: nil)
+        if type.loadStatus().isRefresh,
+           type.loadStatus().needLoadDBWhenRefreshing {
+            if let models: [T] = try? dbManager.query() {
+                let container = LXResponseContainer(rawObject: nil, code: nil, message: nil, type: .model, values: models)
+                completionHandle(.success(container))
+            }
+        }
+        return requestJSONObject(type, context: context, progressBlock: progressBlock) { [weak self] result in
+            let result: LXResult<T> = parseResponseToResult(responseObject: result, type: .array)
+            switch result {
+            case .success(let container):
+                if type.loadStatus().needCache {
+                    if let values = container.values {
+                        try? dbManager.insertOrUpdate(objects: values, clear: type.loadStatus().clearDataWhenCache)
+                    }
+                }
+                break
+            case .failure(let error):
+                self?.handleError(error, context: context)
+            }
+            completionHandle(result)
+        } exceptionHandle: { [weak self] error in
+            let result: LXResult<T> = parseResponseToResult(responseObject: nil,
+                                                            type: .array)
+            self?.handleError(error, context: context)
+            completionHandle(result)
+        }
+    }
+    
+    @discardableResult
+    func requestJSONRawObject<R: LXMoyaTargetType>(_ type: R,
+                                                   context: RequestContext = .init(),
+                                                progressBlock: ProgressBlock? = nil,
+                                                   completionHandle: @escaping ResultContainerHandle) -> Moya.Cancellable?  {
+        return requestJSONObject(type, context: context, progressBlock: progressBlock) { [weak self] result in
+            let result: LXResult<T> = parseResponseToResult(responseObject: result, type: .origin)
+            switch result {
+            case .success(_):
+                break
+            case .failure(let error):
+                self?.handleError(error, context: context)
+            }
+            completionHandle(result)
+        } exceptionHandle: { [weak self] error in
+            let result: LXResult<T> = parseResponseToResult(responseObject: nil,
+                                                            type: .origin)
             self?.handleError(error, context: context)
             completionHandle(result)
         }

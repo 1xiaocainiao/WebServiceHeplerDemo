@@ -13,10 +13,10 @@ enum LXMoyaPlugins {
         var plugins = [PluginType]()
         
         let aesPlugin = LXHandleRequestPlugin()
-//        plugins.append(aesPlugin)
+        plugins.append(aesPlugin)
 #if DEBUG
-        plugins.append(HighPrecisionTimingPlugin())
-        plugins.append(CurlLoggerPlugin())
+//        plugins.append(HighPrecisionTimingPlugin())
+//        plugins.append(CurlLoggerPlugin())
         
         let netConfig: NetworkLoggerPlugin
         let haveAes = plugins.contains(where: { $0 is LXHandleRequestPlugin })

@@ -5,7 +5,7 @@ import Moya
 let apiHost: String = "https://www.baidufe.com/test-post.php"
 let cityHost: String = "http://t.weather.sojson.com/api/weather/city/101030100"
 
-public struct LXMoyaLoadListStatus {
+public struct LXMoyaLoadStatus {
     var isRefresh: Bool
     var needLoadDBWhenRefreshing: Bool
     var needCache: Bool
@@ -22,38 +22,12 @@ public struct LXMoyaLoadListStatus {
     }
 }
 
-public struct LXMoyaLoadStatus {
-    var needLoadDBWhenRefreshing: Bool
-    var needCache: Bool
-    var clearDataWhenCache: Bool
-    
-    init(needLoadDBWhenRefreshing: Bool = false,
-         needCache: Bool = true,
-         clearDataWhenCache: Bool = true) {
-        self.needLoadDBWhenRefreshing = needLoadDBWhenRefreshing
-        self.needCache = needCache
-        self.clearDataWhenCache = clearDataWhenCache
-    }
-}
-
 /// 暂时没用，在想到时候是否添加缓存支持
-public protocol MoyaAddable {
-    var cacheKey: String { get }
-    
-    func loadListStatus() -> LXMoyaLoadListStatus
-    
+public protocol MoyaLoadAble {
     func loadStatus() -> LXMoyaLoadStatus
 }
 
-public extension MoyaAddable {
-    var cacheKey: String {
-        return "cacheKey"
-    }
-    
-    func loadListStatus() -> LXMoyaLoadListStatus {
-        return LXMoyaLoadListStatus()
-    }
-    
+public extension MoyaLoadAble {
     func loadStatus() -> LXMoyaLoadStatus {
         return LXMoyaLoadStatus()
     }
@@ -63,7 +37,7 @@ public extension MoyaAddable {
 
 /// 用的时候一般只需要关心 path, method, parameters, encoding, 特殊的自行根据情况处理
 /// 举个栗子，如TestPolicyApi 文件，就不继承moya原来的targetType协议了，实现LXMoyaTargetType即可
-public protocol LXMoyaTargetType: TargetType {
+public protocol LXMoyaTargetType: TargetType, MoyaLoadAble {
     /// 一般为接口传参
     var parameters: [String: Any] { get }
     
@@ -76,7 +50,8 @@ public protocol LXMoyaTargetType: TargetType {
 
 public extension LXMoyaTargetType {
     var baseURL : URL {
-        return URL(string: cityHost)!
+//        return URL(string: cityHost)!
+        return URL(string: KBaseURL)!
     }
     
     var path: String {
@@ -84,14 +59,11 @@ public extension LXMoyaTargetType {
     }
     
     var method: Moya.Method {
-        return .get
+        return .post
     }
     
     var headers: [String : String]? {
-//        if let token = getAccessToken() {
-//            return ["Authorization": "Bearer \(token)"]
-//        }
-        return nil
+        return LXMoyaHeaderAPI.publicHeaders
     }
     
     var sampleData: Data {
@@ -144,6 +116,27 @@ public extension LXMoyaTargetType {
     /// 底层公共参数
     var publicParams: [String: Any] {
         return [:]
+    }
+}
+
+enum LXMoyaHeaderAPI {
+    static var publicHeaders: [String: String] {
+        let info = Bundle.main.infoDictionary
+        var resultInfo = [String: String]()
+        resultInfo["Platform"] = "ios"
+        resultInfo["App-Version"] = info?["CFBundleShortVersionString"] as? String
+        
+        resultInfo["Device-Id"] = UUID().uuidString
+        resultInfo["Build-Number"] = info?["CFBundleVersion"] as? String
+        resultInfo["Channel"] = ""
+        resultInfo["Language"] = "en"
+        resultInfo["Package-Name"] = info?["CFBundleIdentifier"] as? String
+        
+        resultInfo["OS"] = UIDevice.current.systemName + UIDevice.current.systemVersion
+        resultInfo["Device-Model"] = UUID().uuidString
+        
+//        resultInfo["Content-Type"] = "text/plain"
+        return resultInfo
     }
 }
 

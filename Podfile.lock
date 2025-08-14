@@ -1,5 +1,10 @@
 PODS:
   - Alamofire (5.10.2)
+  - FMDB (2.7.12):
+    - FMDB/standard (= 2.7.12)
+  - FMDB/Core (2.7.12)
+  - FMDB/standard (2.7.12):
+    - FMDB/Core
   - Moya (15.0.0):
     - Moya/Core (= 15.0.0)
   - Moya/Core (15.0.0):
@@ -9,20 +14,23 @@ PODS:
   - SVProgressHUD/Core (2.3.1)
 
 DEPENDENCIES:
+  - FMDB
   - Moya (~> 15.0)
   - SVProgressHUD
 
 SPEC REPOS:
   trunk:
     - Alamofire
+    - FMDB
     - Moya
     - SVProgressHUD
 
 SPEC CHECKSUMS:
   Alamofire: 7193b3b92c74a07f85569e1a6c4f4237291e7496
+  FMDB: 728731dd336af3936ce00f91d9d8495f5718a0e6
   Moya: 138f0573e53411fb3dc17016add0b748dfbd78ee
   SVProgressHUD: 4837c74bdfe2e51e8821c397825996a8d7de6e22
 
-PODFILE CHECKSUM: dd928059684e3cd6270763c577a93e5562c9b219
+PODFILE CHECKSUM: 477eb2f377fefa70ccd393e36973b1eb4b5c0a04
 
 COCOAPODS: 1.16.2

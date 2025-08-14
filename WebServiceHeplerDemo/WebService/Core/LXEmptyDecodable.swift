@@ -7,4 +7,4 @@
 
 import Foundation
 // 用于解析任意model,即使没有返回值也可以用这个解析
-class LXEmptyDecodable: Codable { }
+class LXEmptyDecodable: DatabaseTable { }
