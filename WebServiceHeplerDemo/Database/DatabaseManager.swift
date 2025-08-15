@@ -76,10 +76,6 @@ public extension DatabaseTable {
     }
 }
 
-extension String: DatabaseTable {
-    
-}
-
 
 let dbName = "testApp.db"
 
