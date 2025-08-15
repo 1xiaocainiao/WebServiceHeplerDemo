@@ -189,7 +189,7 @@ extension ViewController {
         LXWebServiceHelper<GlobalModel>().requestJSONModel(UniversalApi.globalConfig) { result in
             switch result {
             case .success(let container):
-                printl(message: "model 结果 --- \(container.valueType?.value?.helper_user_id ?? 0)")
+                printl(message: "model 结果 --- \(container.value?.helper_user_id ?? 0)")
             case .failure(let error):
                 printl(message: error.localizedDescription)
             }

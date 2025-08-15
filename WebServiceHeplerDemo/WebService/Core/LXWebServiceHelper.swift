@@ -35,7 +35,7 @@ open class LXWebServiceHelper<T> where T: DatabaseTable {
             switch result {
             case .success(let container):
                 if type.loadStatus().needCache {
-                    if let value = container.valueType?.value {
+                    if let value = container.value {
                         try? dbManager.insertOrUpdate(object: value, clear: type.loadStatus().clearDataWhenCache)
                     }
                 }
@@ -70,7 +70,7 @@ open class LXWebServiceHelper<T> where T: DatabaseTable {
             switch result {
             case .success(let container):
                 if type.loadStatus().needCache {
-                    if let values = container.valueType?.values {
+                    if let values = container.values {
                         try? dbManager.insertOrUpdate(objects: values, clear: type.loadStatus().clearDataWhenCache)
                     }
                 }
