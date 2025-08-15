@@ -90,13 +90,15 @@ func parseResponseToResult<T: Codable>(responseObject: Any?,
 //            return .success(LXResponseContainer(rawObject: nil,
 //                                                code: statusCode,
 //                                                message: message,
-//                                                value: nil))
+//                                                type: type,
+//                                                valueType: nil))
 //        }
 //        if let tempArray = jsonValue as? Array<Any>, tempArray.isEmpty {
 //            return .success(LXResponseContainer(rawObject: nil,
 //                                                code: statusCode,
 //                                                message: message,
-//                                                value: [] as? T))
+//                                                type: type,
+//                                                valueType: nil))
 //        }
         
         switch type {
