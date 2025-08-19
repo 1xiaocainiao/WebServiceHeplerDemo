@@ -94,22 +94,22 @@ func parseResponseToResult<T: Codable>(responseObject: Any?,
         }
         
         // 这两个一般用不到，只有会端data乱来才需要检查
-        guard !(jsonValue is NSNull) else {
-            return .success(LXResponseContainer(rawObject: nil,
-                                                code: statusCode,
-                                                message: message,
-                                                type: type,
-                                                rawData: jsonValue,
-                                                valueType: nil))
-        }
-        if let tempArray = jsonValue as? Array<Any>, tempArray.isEmpty {
-            return .success(LXResponseContainer(rawObject: nil,
-                                                code: statusCode,
-                                                message: message,
-                                                type: type,
-                                                rawData: jsonValue,
-                                                valueType: nil))
-        }
+//        guard !(jsonValue is NSNull) else {
+//            return .success(LXResponseContainer(rawObject: nil,
+//                                                code: statusCode,
+//                                                message: message,
+//                                                type: type,
+//                                                rawData: jsonValue,
+//                                                valueType: nil))
+//        }
+//        if let tempArray = jsonValue as? Array<Any>, tempArray.isEmpty {
+//            return .success(LXResponseContainer(rawObject: nil,
+//                                                code: statusCode,
+//                                                message: message,
+//                                                type: type,
+//                                                rawData: jsonValue,
+//                                                valueType: nil))
+//        }
         
         switch type {
         case .origin:
