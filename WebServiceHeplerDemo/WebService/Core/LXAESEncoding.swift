@@ -6,6 +6,7 @@ import CommonCrypto
 let kPublicKey = "9A13AE6CAE4C1FF134F22F3B0953F0DA"
 let kAESKey = "31FF1BAC33ABDC97"
 let kAESIV = "ABDF4EB14FFAC1C1"
+let KBaseURL = ""
 
 func paramsEncrypt(params: [String: Any]) -> Data? {
     do {
