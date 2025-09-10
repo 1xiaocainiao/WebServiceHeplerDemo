@@ -16,7 +16,7 @@ class ViewController: UIViewController {
         super.viewDidLoad()
         
 //        requestBaidu()
-        requestBaiduAlertError()
+//        requestBaiduAlertError()
         
         
 //        requestBaiduAsync()
@@ -31,6 +31,10 @@ class ViewController: UIViewController {
         
         
 //        testDataBase()
+        
+//        requestModelPublisher()
+        
+        requestJsonPublisher()
 
         // Do any additional setup after loading the view.
     }
@@ -81,50 +85,6 @@ class ViewController: UIViewController {
             }
         }
     }
-
-//    func testPublisherRequest() {
-//        let publisher = LXWebServiceHelper<CityInfo>().requestJsonModelPublisher(TestRequestType.cityTest, progressBlock: nil)
-//
-//
-////        publisher.sink { completion in
-////            switch completion {
-////            case .finished:
-////                printl(message: "finished")
-////            case .failure(let error):
-////                printl(message: error.localizedDescription)
-////                guard let error = error as? LXError else {
-////                    return
-////                }
-////                if case .serverDataFormatError = error {
-////                    printl(message: "缺失状态码")
-////                }
-////                if case .dataContentTransformToModelFailed = error {
-////                    printl(message: "json to model failed")
-////                }
-////            }
-////        } receiveValue: { container in
-////            printl(message: container.value?.city)
-////        }.store(in: &cancellables)
-//
-//
-//        publisher.sink { reuslt in
-//            switch reuslt {
-//            case .success(let container):
-//                printl(message: container.value?.city)
-//            case .failure(let error):
-//                printl(message: error.localizedDescription)
-//                guard let error = error as? LXError else {
-//                    return
-//                }
-//                if case .serverDataFormatError = error {
-//                    printl(message: "缺失状态码")
-//                }
-//                if case .dataContentTransformToModelFailed = error {
-//                    printl(message: "json to model failed")
-//                }
-//            }
-//        }.store(in: &cancellables)
-//    }
     
     func testRefreshToken() {
 //        for index in 0..<1 {
@@ -176,5 +136,35 @@ extension ViewController {
             }
         }
         task.cancel()
+    }
+}
+
+extension ViewController {
+    func requestModelPublisher() {
+        let publisher = LXWebServiceHelper<CityInfo>().requestJSONModelPublisher(TestRequestType.cityTest)
+        publisher.sink { completion in
+            switch completion {
+            case .finished:
+                printl(message: "finished")
+            case .failure(let error):
+                printl(message: error.localizedDescription)
+            }
+        } receiveValue: { container in
+            printl(message: container.value?.city)
+        }.store(in: &cancellables)
+    }
+    
+    func requestJsonPublisher() {
+        let publisher = LXWebServiceHelper<CityInfo>().requestJSONRawObjectPublisher(TestRequestType.cityTest)
+        publisher.sink { completion in
+            switch completion {
+            case .finished:
+                printl(message: "finished")
+            case .failure(let error):
+                printl(message: error.localizedDescription)
+            }
+        } receiveValue: { result in
+            printl(message: "json: \(result)")
+        }.store(in: &cancellables)
     }
 }

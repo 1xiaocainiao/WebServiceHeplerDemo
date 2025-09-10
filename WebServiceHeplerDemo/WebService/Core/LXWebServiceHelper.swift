@@ -7,6 +7,7 @@
 
 import Foundation
 import Moya
+import Combine
 
 open class LXWebServiceHelper<T> where T: Codable {
     typealias JSONObjectHandle = (Any) -> Void
@@ -234,4 +235,37 @@ extension LXWebServiceHelper {
 // 使用类包装 Cancellable 和状态
 final class ContextCancellable {
     var cancellable: Moya.Cancellable?
+}
+
+// MARK: - combine支持
+extension LXWebServiceHelper {
+    func requestJSONRawObjectPublisher<R: LXMoyaTargetType>(_ type: R,
+                                                            context: RequestContext = .init(),
+                                                            progressBlock: ProgressBlock? = nil) -> AnyPublisher<Any, LXError> {
+        return Future<Any, LXError> { [weak self] promise in
+            self?.requestJSONRawObject(type, context: context, progressBlock: progressBlock) { json in
+                promise(.success(json))
+            } exceptionHandle: { error in
+                promise(.failure(error))
+            }
+        }.eraseToAnyPublisher()
+    }
+    
+    // 暂时没有真正的取消moya的请求
+    func requestJSONModelPublisher<R: LXMoyaTargetType>(_ type: R,
+                                                        context: RequestContext = .init(),
+                                                        progressBlock: ProgressBlock? = nil) -> AnyPublisher<LXResponseContainer<T>, LXError> {
+        return Deferred {
+            Future<LXResponseContainer<T>, LXError> { [weak self] promise in
+                self?.requestJSONModel(type, context: context, progressBlock: progressBlock) { result in
+                    switch result {
+                    case .success(let container):
+                        promise(.success(container))
+                    case .failure(let error):
+                        promise(.failure(error))
+                    }
+                }
+            }
+        }.eraseToAnyPublisher()
+    }
 }
